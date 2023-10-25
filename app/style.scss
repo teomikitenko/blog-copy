@@ -1,0 +1,96 @@
+@import '../style/variables';
+@import '../style/zero';
+.content{
+ display: flex;
+ width: 100%;
+ min-height: 100%;
+}
+header{
+    position: fixed;
+    z-index: 300;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: $main-background;
+    .link_header{
+        display: flex;
+        gap: 1rem;
+        p{
+            color: $text-color;
+            font-size: 24px;
+            line-height: 140%;
+            font-weight: 700;
+            }
+    }
+     img{
+        align-self: center;
+    }
+ 
+}
+main{
+    display: flex;
+    min-height: 100%;
+    width: 100%;
+    .leftbar{
+        height: 100%;
+        display: flex;
+        padding-top: 5.5rem;
+     background-color: $main-background;
+    }
+    .leftbar_links_container{
+        width: 100%;
+        gap: 1.7rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        display: flex;
+        
+        flex-direction: column;
+        height: 100%;
+        .link{
+            display: flex;
+            justify-content: flex-start;
+    gap: 1.6rem;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    img{
+        align-self: center;
+    }
+    a{
+        display: flex;
+        align-items: center;
+    }
+            p{
+                 color: $text-color;
+                 font-size: larger;
+            }
+        }
+    }
+    .right_side_bar{
+        background-color: $main-background;
+        width: 318px;
+        position: sticky;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    }
+    .content_bar{
+        padding-top: 5.5rem;
+        flex-grow: 1;
+        padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    background-color: $black-background;
+    }
+}
+.card_posts{
+display: flex;
+flex-direction: column;
+margin-top: 2.25rem;
+gap: 2.5rem;
+}
+.home_page{
+h1{
+    color: $text-color;
+    font-size: 30px;
+    line-height: 140%;
+    font-weight: 700;
+}
+}

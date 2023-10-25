@@ -1,8 +1,16 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
+import './style.scss'
+import logo from '../public/assets/logo.svg'
+import Image from 'next/image'
+import Link from 'next/link'
+import Leftbar from '@/components/leftbar'
+import Rightbar from '@/components/rightbar'
+import '@mantine/core/styles.css';
 
-const inter = Inter({ subsets: ['latin'] })
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+const inter = Inter({
+  subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +24,34 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className} >
+        <div className="content">
+        <header>
+          <Link href={"/"} className='link_header'>
+          <Image
+           src={logo}
+            width={28} 
+            height={28}
+            alt='logo'
+          />
+          <p>Threads</p></Link>
+          
+          </header>
+        <main className={inter.className}>
+          <section className='left_side_bar'>
+            <Leftbar/>
+          </section>
+          <section className='content_bar'>
+            <MantineProvider>
+            {children}
+            </MantineProvider>
+          </section>
+          <section className='right_side_bar'>
+           <Rightbar/>
+          </section>
+        </main>
+        </div>
+        </body>
     </html>
   )
 }
