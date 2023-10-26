@@ -1,5 +1,5 @@
 "use client"
-import { Card, Text, Badge, Button, Group, Stack } from '@mantine/core';
+import { Card, Text, Group, Stack } from '@mantine/core';
 import Image from 'next/image';
 import '@mantine/core/styles/Card.css';
 import logo from '@/public/assets/logo.svg'
@@ -26,7 +26,7 @@ const HomePosts = () => {
                 <Group gap={25} align='flex-start' >
                 <Image src={logo.src} 
               style={{objectFit: "cover"}} width={30}  height={30} alt='avatar'/> 
-                <Stack /* justify='space-between' */ > 
+                <Stack> 
             <Text c={'rgb(255 255 255)'} fw={500}>{p.name}</Text>
              <Text c={'rgb(255 255 255)'} fw={500}>{p.text}</Text>
          </Stack>

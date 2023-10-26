@@ -6,6 +6,8 @@
  min-height: 100%;
 }
 header{
+    display: flex;
+    justify-content: space-between;
     position: fixed;
     z-index: 300;
     width: 100%;
@@ -24,6 +26,15 @@ header{
      img{
         align-self: center;
     }
+    .sighin_container{
+        display: flex;
+        gap: 10px;
+        p{
+            color: $text-color;
+            font-size: large;
+            font-weight:600;
+         }
+    }
  
 }
 main{
@@ -31,12 +42,16 @@ main{
     min-height: 100%;
     width: 100%;
     .leftbar{
-        height: 100%;
+        position: sticky;
+        top: 0;
+        left: 0;
+        height: 100vh;
         display: flex;
         padding-top: 5.5rem;
      background-color: $main-background;
     }
     .leftbar_links_container{
+        
         width: 100%;
         gap: 1.7rem;
         padding-left: 1.5rem;
@@ -62,6 +77,14 @@ main{
                  color: $text-color;
                  font-size: larger;
             }
+        }
+        .signout_container{
+            display: flex;
+            
+        p{
+            color: $text-color;
+            font-size: larger;
+        }
         }
     }
     .right_side_bar{

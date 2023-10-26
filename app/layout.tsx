@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './style.scss'
-import logo from '../public/assets/logo.svg'
-import Image from 'next/image'
-import Link from 'next/link'
 import Leftbar from '@/components/leftbar'
 import Rightbar from '@/components/rightbar'
 import '@mantine/core/styles.css';
+import Provider from '@/components/Provider'
+import Header from '@/components/Header'
+
 
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 const inter = Inter({
@@ -27,24 +27,20 @@ export default function RootLayout({
       <body className={inter.className} >
         <div className="content">
         <header>
-          <Link href={"/"} className='link_header'>
-          <Image
-           src={logo}
-            width={28} 
-            height={28}
-            alt='logo'
-          />
-          <p>Threads</p></Link>
-          
+          <Provider>
+            <Header/>
+          </Provider>
           </header>
         <main className={inter.className}>
           <section className='left_side_bar'>
             <Leftbar/>
           </section>
           <section className='content_bar'>
+          <Provider>
             <MantineProvider>
-            {children}
+              {children}
             </MantineProvider>
+            </Provider>
           </section>
           <section className='right_side_bar'>
            <Rightbar/>
