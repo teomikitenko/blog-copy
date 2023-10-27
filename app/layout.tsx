@@ -37,7 +37,7 @@ export default function RootLayout({
           </section>
           <section className='content_bar'>
           <Provider>
-            <MantineProvider>
+            <MantineProvider defaultColorScheme="dark">
               {children}
             </MantineProvider>
             </Provider>

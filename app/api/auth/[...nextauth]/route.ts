@@ -1,23 +1,26 @@
 import NextAuth, { User } from "next-auth"
 import GoogleProviders  from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
+import { createClient } from '@supabase/supabase-js';
 
 type UserData={
-  username:string,  
+  name:string,  
   email:string,
     password:string
   }
+
+  const supabase=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
   const user=[
     {
-      username:'Julia',
+      name:'Julia',
       email:'julia@gmail.com',  
       password:'1111'
       },{
-        username:'Dante',
+        name:'Dante',
         email:'dante@gmail.com',  
         password:'2222'
         },{
-          username:'Olexa',
+          name:'Olexa',
           email:'olexa@gmail.com',  
           password:'3333'
           }
@@ -33,20 +36,20 @@ export const handler = NextAuth(
             CredentialsProvider({
                 name: 'Credentials',
                 credentials: {
-                    username: { label: "username", type: "text", placeholder: "jsmith" },
+                    name: { label: "username", type: "text", placeholder: "jsmith" },
                     password: { label: "password", type: "password" },
                     email: { label: "email", type: "email" }
                   },
                   async authorize(credentials, req){
                     console.log(credentials)
                     console.log(req)
-                    const { username, password } = credentials as { username: string; password: string; };
-                    const currentUser:UserData|undefined=user.find(u=>username === credentials?.username)
+                    const { name, password,email } = credentials as { name: string; password: string;email:string };
+                    const currentUser:UserData|undefined=user.find(u=>name === credentials?.name)
                     if(!currentUser){
                         return null
                     }
-                   if(username === credentials?.username&&currentUser.email == credentials?.email){
-                    const currentUser={name:username}
+                   if(name === credentials?.name&&currentUser.email == credentials?.email){
+                    const currentUser={name:name,email:email}
                     return currentUser  as User
                    }
                    return null
@@ -56,7 +59,29 @@ export const handler = NextAuth(
 
             
         ],
-        secret:process.env.NEXTAUTH_SECRET
+        callbacks:{
+          async signIn({user, account, profile, email, credentials}){
+            console.log(user.name)
+            try {
+              const { data:userExist, error } = await supabase
+            .from('table_users')
+            .select('*')
+            .eq('name', user.name)
+              if(userExist?.length===0){
+                await supabase
+                .from('table_users')
+                .insert([
+                  { name: user.name, email: user.email, image:user.image },
+                ])
+              } 
+              return true
+            } catch (error) {
+              console.log(error)
+              return false
+            }
+          }
+        }
+       
        
     }
 )

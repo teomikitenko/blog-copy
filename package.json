@@ -13,6 +13,7 @@
     "@mantine/form": "^7.1.5",
     "@mantine/hooks": "^7.1.5",
     "@mantine/modals": "^7.1.5",
+    "@supabase/supabase-js": "^2.38.4",
     "@tabler/icons": "^2.39.0",
     "@tabler/icons-react": "^2.39.0",
     "mongoose": "^7.6.3",

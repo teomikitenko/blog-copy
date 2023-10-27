@@ -7,7 +7,6 @@ import {IconUserCircle} from '@tabler/icons-react'
 
 const Header = () => {
     const{data:session ,status}=useSession()
-   console.log(session)
   return (
     <>
     <Link href={"/"} className='link_header'>

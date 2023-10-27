@@ -1,0 +1,18 @@
+ @import '../../style/variables'; 
+
+.create_thread_container{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+h1{
+color: $text-color;
+font-size: 30px;
+    line-height: 140%;
+    font-weight: 700;
+}
+p{
+    margin-top:  10px;
+    color: $text-color;
+    font-weight: 500;
+}
+}
