@@ -4,6 +4,9 @@ import Link from 'next/link'
 import logo from '@/public/assets/logo.svg'
 import { useSession } from 'next-auth/react'
 import {IconUserCircle} from '@tabler/icons-react'
+import { Text,Button } from '@mantine/core';
+import { signIn } from "next-auth/react"
+
 
 const Header = () => {
     const{data:session ,status}=useSession()
@@ -27,7 +30,7 @@ const Header = () => {
       color='var(--mantine-color-blue-filled)'
       />}
       <p style={{display:'inline-flex',alignItems:'center'}}>{session?.user?.name}</p> </div>:
-      <p>Log in</p>
+      <Text style={{cursor:'pointer'}} onClick={()=>signIn()} size='lg' c='rgb(255 255 255)'>Log in</Text>
     }
     </>
   )

@@ -28,7 +28,9 @@ export default function RootLayout({
         <div className="content">
         <header>
           <Provider>
+            <MantineProvider defaultColorScheme='dark'>
             <Header/>
+            </MantineProvider>
           </Provider>
           </header>
         <main className={inter.className}>

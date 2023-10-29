@@ -1,43 +1,31 @@
 "use client"
-import { Card, Text, Group, Stack } from '@mantine/core';
-import Image from 'next/image';
-import '@mantine/core/styles/Card.css';
-import logo from '@/public/assets/logo.svg'
-
-const posts=[
-    {name:'one',text:'hellovifdoivldfvld',},
-    {name:'two',text:'hellovifdoivldfvld',},
-    {name:'three',text:'hellovifdoivldfvld',},
-    {idname:'four',text:'hellovifdoivldfvld',},
-    {idname:'three',text:'hellovifdoivldfvld',},
-    {idname:'four',text:'hellovifdoivldfvld',},
-    {idname:'three',text:'hellovifdoivldfvld',},
-    {idname:'four',text:'hellovifdoivldfvld',}
-]
+import { takeAllPosts } from '@/configs/postsConfigs';
+import { useEffect, useState } from 'react';
+import Post from './Post';
 
 
+type PostType={
+  id:number
+  created_at:string,
+  created_by:string,
+  post_text:string | number,
+  comments:object
+}
 
 
 
 const HomePosts = () => {
-    
-  return (
-
+  const [posts, setPosts] = useState<PostType[] | null>([])
+   takeAllPosts()
+   useEffect(()=>{
+    takeAllPosts()
+    .then(res=>setPosts(res))
+   },[])
+   return (
     <div className="card_posts">
-      {posts.map((p,index)=>(
-         <Card key={index} style={{display:'flex'}} bg={'#212529'}  shadow="sm" p={35}  >
-              <Card.Section>
-                <Group gap={25} align='flex-start' >
-                <Image src={logo.src} 
-              style={{objectFit: "cover"}} width={30}  height={30} alt='avatar'/> 
-                <Stack> 
-            <Text c={'rgb(255 255 255)'} fw={500}>{p.name}</Text>
-             <Text c={'rgb(255 255 255)'} fw={500}>{p.text}</Text>
-         </Stack>
-                </Group>
-             </Card.Section>
-         </Card>
-      ))}
+       {posts?.map((p:PostType)=>(
+    <Post p={p}/>
+      ))} 
     </div>
  
     

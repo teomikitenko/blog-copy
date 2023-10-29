@@ -25,7 +25,7 @@ const Leftbar = () => {
         {name:"Activity",href:'/activity',src:activity},
         {name:"Create Thread",href:'/create',src:create},
         {name:"Communities",href:'/communities',src:communities},
-        {name:"Profile",href:'/proile',src:profile}
+        {name:"Profile",href:'/profile',src:profile}
     ]
   return (
     <div className="leftbar">
