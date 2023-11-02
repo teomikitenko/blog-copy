@@ -1,6 +1,9 @@
 @import '../style/variables';
 @import '../style/zero';
 @import'../app/create/style.scss';
+
+
+
 .content{
  display: flex;
  width: 100%;
@@ -52,7 +55,6 @@ main{
      background-color: $main-background;
     }
     .leftbar_links_container{
-        
         width: 100%;
         gap: 1.7rem;
         padding-left: 1.5rem;
@@ -121,11 +123,14 @@ h1{
 }
 }
 
-.mantine-Button-root:hover{
+  /*  .mantine-Button-root :hover{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    background: $main-background ;
+     background: $main-background  ;
      transition: all 150ms linear ; 
-}
+}   */
 .counter_threads{
     font-size: 10px;
     line-height: 140%;
@@ -136,4 +141,17 @@ h1{
     padding-right: 0.5rem;
     margin-left: 0.25rem;
     background-color: rgb(92 92 123)
+}
+.mantine-TextInput-input{
+    background-color: $black-background !important;
+    border: none !important;
+}	
+.mantine-TextInput-wrapper{
+    border: none !important;
+
+}
+.focus_button{
+   &:focus{
+    background: $main-background 
+   }
 }

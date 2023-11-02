@@ -20,7 +20,7 @@ mt={20}
    autosize
    minRows={17}
  />
-<Button onClick={()=>{createPost(session?.user?.name,text )}}
+<Button  onClick={()=>{createPost(session?.user?.name,text )}}
 variant='filled'
  size='md' 
   color='rgb(135 126 255)'

@@ -3,12 +3,11 @@ import { Inter } from 'next/font/google'
 import './style.scss'
 import Leftbar from '@/components/leftbar'
 import Rightbar from '@/components/rightbar'
-import '@mantine/core/styles.css';
 import Provider from '@/components/Provider'
 import Header from '@/components/Header'
 
 
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+
 const inter = Inter({
   subsets: ['latin'] })
 
@@ -28,9 +27,7 @@ export default function RootLayout({
         <div className="content">
         <header>
           <Provider>
-            <MantineProvider defaultColorScheme='dark'>
             <Header/>
-            </MantineProvider>
           </Provider>
           </header>
         <main className={inter.className}>
@@ -39,9 +36,7 @@ export default function RootLayout({
           </section>
           <section className='content_bar'>
           <Provider>
-            <MantineProvider defaultColorScheme="dark">
               {children}
-            </MantineProvider>
             </Provider>
           </section>
           <section className='right_side_bar'>

@@ -8,8 +8,8 @@ type PostType={
   id:number
   created_at:string,
   created_by:string,
-  post_text:string | number,
-  comments:object
+   text:string | number,
+ 
 }
 
 
@@ -24,7 +24,7 @@ const HomePosts = () => {
    return (
     <div className="card_posts">
        {posts?.map((p:PostType)=>(
-    <Post p={p}/>
+    <Post key={p.id} p={p}/>
       ))} 
     </div>
  
