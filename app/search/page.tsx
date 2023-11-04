@@ -1,9 +1,14 @@
 import React from 'react'
+import Search from '@/components/Search'
+import { takeAllUsers } from '@/configs/postsConfigs'
 
-const Search = () => {
+
+
+export default async function SearchPage(){
+  const users=await takeAllUsers()
+  console.log(users)
   return (
-    <div>Search</div>
+    <Search users={users}/>
   )
 }
 
-export default Search

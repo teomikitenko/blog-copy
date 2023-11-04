@@ -32,4 +32,18 @@ export const takeAllPosts=async()=>{
     .select()
     return posts
 }
-   
+export const takeAllUsers=async()=>{
+  const{data:users,error}=await supabase
+  .from('table_users')
+  .select()
+  return users
+}
+export const searchUser=async(id:number|string)=>{
+  let { data: user, error } = await supabase
+  .from('table_users')
+  .select()
+  .eq('id',id)
+   .select() 
+  return user
+}
+ 
