@@ -1,19 +1,14 @@
 import HomePosts from "@/components/Home";
-import { takeAllPosts } from "@/configs/postsConfigs";
-import { revalidateTag } from 'next/cache'
-
-
-
-
+import { Text } from "@mantine/core";
 
 export default async function HomePage() {
-  const posts = await fetch('http://localhost:3000/api/posts', { next: { revalidate: 1 }});
+  const posts = await fetch('http://localhost:3000/api/posts', { cache: 'no-store'});
   const data = await posts.json()
 
   
   return (
     <div className="home_page">
-      <h1>Home</h1>
+       <Text style={{fontSize:'30px',lineHeight:'140%'}} c='rgb(255 255 255)' fw={700}>Home</Text>
        <HomePosts   posts={data}  /> 
     </div>
   );

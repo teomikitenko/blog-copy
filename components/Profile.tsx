@@ -5,6 +5,7 @@ import members from "@/public/assets/members.svg";
 import tag from "@/public/assets/tag.svg";
 import Image from "next/image";
 import logo from "@/public/assets/logo.svg";
+import Post from "./Post";
 
 import { useState } from "react";
 
@@ -14,8 +15,7 @@ type UserProfile = {
   image?: string | null;
 };
 
-const Profile = ({ user }: { user: UserProfile | undefined | null }) => {
-  const [threads, setThreads] = useState(0);
+const Profile = ({ user,threads }: { user: UserProfile | undefined | null,threads:any[]|null }) => {
   const tab = [
     { text: "threads", icon: reply },
     { text: "replies", icon: members },
@@ -36,12 +36,14 @@ const Profile = ({ user }: { user: UserProfile | undefined | null }) => {
       </Group>
       <Divider my="sm" />
       <Tabs
+      
         color="rgb(14 14 18)"
         variant="pills"
         defaultValue="threads"
         orientation="horizontal"
       >
         <Tabs.List
+          mb={30}
           h={50}
           style={{ backgroundColor: "rgb(18 20 23)" }}
           justify="center"
@@ -55,13 +57,21 @@ const Profile = ({ user }: { user: UserProfile | undefined | null }) => {
                   {t.text}
                 </Text>
                 {t.text === "threads" && (
-                  <p className="counter_threads">{threads}</p>
+                  <p className="counter_threads">{threads?.length}</p>
                 )}
               </Group>
             </Tabs.Tab>
           ))}
         </Tabs.List>
-        <Tabs.Panel value="threads">0</Tabs.Panel>
+        <Tabs.Panel value="threads">
+          <Stack>
+          {
+          threads?.map(t=>(
+            <Post key={t.id} p={t}/> 
+          ))
+        }
+            </Stack>
+            </Tabs.Panel>
 
         <Tabs.Panel value="replies">0</Tabs.Panel>
 

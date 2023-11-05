@@ -1,9 +1,9 @@
 import React from 'react'
-
-const Communities = () => {
+import Communities from '@/components/Communities'
+const CommunitiesPage = () => {
   return (
-    <div>Communities</div>
+    <Communities/>
   )
 }
 
-export default Communities
+export default CommunitiesPage

@@ -26,6 +26,13 @@ export const takePost=async(id:number)=>{
   .eq('id', id)
   return post
 }
+export const takeAllUserPost=async(name:string)=>{
+  const { data:posts, error } = await supabase
+  .from('posts_users')
+  .select()
+  .eq('created_by', name)
+  return posts
+}
 export const takeAllPosts=async()=>{
     const{data:posts,error}=await supabase
     .from('posts_users')
