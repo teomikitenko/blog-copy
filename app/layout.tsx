@@ -7,7 +7,6 @@ import Provider from '@/components/Provider'
 import Header from '@/components/Header'
 
 
-
 const inter = Inter({
   subsets: ['latin'] })
 

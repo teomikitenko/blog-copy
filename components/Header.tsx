@@ -1,5 +1,5 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/logo.svg";
@@ -14,11 +14,13 @@ import {
   Divider,
   ThemeIcon,
   Modal,
+  FileButton,
 } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
 import { Session } from "next-auth";
+import { addNewCommunities,UploadLogo } from "@/configs/postsConfigs";
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -95,7 +97,13 @@ const MyMenu = ({
     </Menu>
   );
 };
-const Item = ({ session,openMenu }: { session: Session | null,openMenu:any }) => {
+const Item = ({
+  session,
+  openMenu,
+}: {
+  session: Session | null;
+  openMenu: any;
+}) => {
   return (
     <Stack>
       <Group gap={15} p={20}>
@@ -122,12 +130,12 @@ const Item = ({ session,openMenu }: { session: Session | null,openMenu:any }) =>
     </Stack>
   );
 };
-const ItemAdd = ({openMenu}) => {
+const ItemAdd = ({ openMenu }) => {
   const [opened, setOpened] = useState(false);
-  const closeAll=()=>{
-    setOpened(false)
-    openMenu(false)
-  }
+  const closeAll = () => {
+    setOpened(false);
+    openMenu(false);
+  };
   return (
     <>
       <Group onClick={() => setOpened(true)} mb={20} gap={40} pl={20}>
@@ -142,30 +150,65 @@ const ItemAdd = ({openMenu}) => {
         onClose={closeAll}
         centered
       >
-        <MyForm closeAll={closeAll}/>
-       {/*  <Button onClick={closeAll}>Create</Button> */}
+        <MyForm closeAll={closeAll} />
+        {/*  <Button onClick={closeAll}>Create</Button> */}
       </Modal>
     </>
   );
 };
-const MyForm=({closeAll})=>{
-  const { register, handleSubmit,reset } = useForm({
-    defaultValues:{
-      NameCommunities:'',
-      EmailCommunities:''
-    }
+const MyForm = ({ closeAll }) => {
+  const { data: session, status } = useSession();
+  const [file, setFile] = useState<File | null>(null);
+  const [link, setLink] = useState();
+
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      name: "",
+      bio: "",
+      email: "",
+    },
   });
-  const submitForm=(data,e)=>{
-    console.log(data,e)
-    reset()
-    closeAll()
-    
-  }
-return(
-  <form onSubmit={handleSubmit((data,e)=>submitForm(data,e))}>
-    <input {...register("NameCommunities")} />
-    <input {...register("EmailCommunities")} />
-    <button type="submit">Submit</button>
-  </form>
-)
-}
+  console.log(file);
+  if (file) console.log(URL.createObjectURL(file!));
+
+  type FormValues = {
+    name: string;
+    bio: string;
+    email: string;
+  };
+  console.log(session?.user?.name)
+  const submitForm: SubmitHandler<FormValues> = async (data) => {
+    const { name, bio, email } = data;
+    const image = URL.createObjectURL(file!);
+    const objData = {
+      creator: session?.user?.name,
+      name: name,
+      image: image,
+      bio: bio,
+      email: email,
+    };
+    await addNewCommunities(objData);
+    await UploadLogo(file?.name,file)
+    reset();
+    closeAll();
+  };
+  const preview = () => {
+    const image = URL.createObjectURL(file!);
+    return <Image src={image} width={80} height={80} alt="image" />;
+  };
+  return (
+    <>
+      <form onSubmit={handleSubmit(submitForm)}>
+        <input {...register("name")} />
+        <input {...register("bio")} />
+        <input {...register("email")} />
+        <FileButton onChange={setFile} accept="image/png,image/jpeg">
+          {(props) => <Button {...props}>Upload image</Button>}
+        </FileButton>
+        <button type="submit">Submit</button>
+      </form>
+
+      {file && preview()}
+    </>
+  );
+};
