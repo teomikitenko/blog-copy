@@ -9,7 +9,6 @@ type PostType = {
 };
 
 const HomePosts = ({ posts }: { posts?: PostType[]|any }) => {
- 
   return (
     <div className="card_posts">
       {posts?.map((p: PostType) => (

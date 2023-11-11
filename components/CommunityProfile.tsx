@@ -2,21 +2,25 @@
 import { Avatar, Divider, Group, Stack, Tabs,Text } from "@mantine/core"
 import Image from "next/image"
 import type { CommunityType } from "./Communities"
-import logo from '@/public/assets/logo.svg'
+import { UserCard } from "./Search"
 import reply from '@/public/assets/reply.svg'
 import members from '@/public/assets/members.svg'
 import request from '@/public/assets/request.svg'
 
 
 
-const CommunityProfile = ({community,imageUrl}:
-  {community:CommunityType,imageUrl:{data:{publicUrl:string}}}) => {
+const CommunityProfile = ({community,imageUrl,admin}:
+  {community:CommunityType,
+    imageUrl:{data:{publicUrl:string}},
+    admin:any
+  
+  }) => {
   const tab = [
     { text: "threads", icon: reply },
     { text: "members", icon: members },
     { text: "requests", icon: request },
   ];
-  console.log(imageUrl)
+  console.log(admin)
   return (
     <Stack>
     <Group mt={20}>
@@ -69,9 +73,11 @@ const CommunityProfile = ({community,imageUrl}:
           </Stack> */}
           </Tabs.Panel>
 
-      <Tabs.Panel value="replies">0</Tabs.Panel>
-
-      <Tabs.Panel value="tagged">0</Tabs.Panel>
+      <Tabs.Panel value="members">
+      <UserCard user={admin} admin />
+      </Tabs.Panel>
+     
+      <Tabs.Panel value="requests">0</Tabs.Panel>
     </Tabs>
   </Stack>
   )

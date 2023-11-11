@@ -54,6 +54,22 @@ export const searchUser=async(id:number|string)=>{
    .select() 
   return user
 }
+export const searchUserByName=async(name:string)=>{
+  let { data: user, error } = await supabase
+  .from('table_users')
+  .select()
+  .eq('name',name)
+   .select() 
+  return user
+}
+export const searchUserName=async(name:string)=>{
+  let { data: user, error } = await supabase
+  .from('table_users')
+  .select()
+  .eq('name',name)
+   .select() 
+  return user![0]
+}
  type CommunityType={
   creator:string|null|undefined,
   name:string,
@@ -80,6 +96,13 @@ export const SearchCommunity=async(id:string|number)=>{
   .select()
   .eq('id',id)
  return community![0]
+}
+export const searchCommunityByCreater=async(creator:string)=>{
+  const{data:community,error}=await supabase
+  .from('communities')
+  .select()
+  .eq('creator',creator)
+ return community
 }
 
   export const UploadLogo=async(name:any,logo:any)=>{
