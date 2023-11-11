@@ -74,12 +74,19 @@ export const takeAllCommunities=async()=>{
   .select()
   return communities
 }
+export const SearchCommunity=async(id:string|number)=>{
+  const{data:community,error}=await supabase
+  .from('communities')
+  .select()
+  .eq('id',id)
+ return community![0]
+}
 
   export const UploadLogo=async(name:any,logo:any)=>{
     const { data, error } = await supabase
   .storage
   .from('Clone_Blog')
-  .upload(name, logo, {
+  .upload(`logo_communities/${name}`, logo, {
     cacheControl: '3600',
     upsert: false
   })

@@ -1,9 +1,17 @@
 import Communities from '@/components/Communities'
 import { Text } from '@mantine/core'
 import { takeAllCommunities } from '@/configs/postsConfigs'
+import { supabase } from '@/configs/postsConfigs'
+export const revalidate = 0
+
 
 const CommunitiesPage = async() => {
   const communities=await takeAllCommunities()
+  const publicUrl = supabase.storage
+  .from('Clone_Blog')
+  .getPublicUrl('logo_communities/Eagles.png')
+  console.log(publicUrl)
+
   return (
     <>
      <Text style={{fontSize:'30px',lineHeight:'140%'}} c='rgb(255 255 255)' fw={700}>Communities</Text>

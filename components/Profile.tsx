@@ -7,7 +7,6 @@ import Image from "next/image";
 import logo from "@/public/assets/logo.svg";
 import Post from "./Post";
 
-import { useState } from "react";
 
 type UserProfile = {
   name?: string | null;
@@ -49,8 +48,8 @@ const Profile = ({ user,threads }: { user: UserProfile | undefined | null,thread
           justify="center"
           grow={true}
         >
-          {tab.map((t) => (
-            <Tabs.Tab value={t.text}>
+          {tab.map((t,index) => (
+            <Tabs.Tab key={index} value={t.text}>
               <Group>
                 <Image src={t.icon} width={24} height={24} alt="icon" />
                 <Text tt="capitalize" size="lg" fw={500} c={"rgb(239 239 239)"}>

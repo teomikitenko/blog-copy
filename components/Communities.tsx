@@ -1,42 +1,87 @@
-'use client'
-import { Text,Card,Stack,Button } from '@mantine/core'
-import Image from 'next/image'
+"use client";
+import { Text, Card, Stack, Button, Group } from "@mantine/core";
+import Image from "next/image";
+import logo from "@/public/assets/logo.svg";
+import { useEffect,useState } from "react";
+import { supabase } from "@/configs/postsConfigs";
+import Link from "next/link";
 
-type CommunityType={
-  creator:string|null|undefined,
-  name:string,
-  image:string,
-  bio:string,
-  email:string 
- }
-const Communities = ({communities}:{communities:CommunityType[] | null | undefined}) => {
+export type CommunityType = {
+  id:number,
+  creator: string | null | undefined;
+  name: string;
+  image: string;
+  bio: string;
+  email: string;
+};
+const Communities = ({
+  communities,
+}: {
+  communities: CommunityType[] | null | undefined;
+}) => {
   return (
-    communities?.map((c,index)=><CommunityCard key={index} data={c}/>)
-  )
-}
+    <>
+      {communities?.map((c, index) => (
+        <CommunityCard key={index} data={c} />
+      ))}
+    </>
+  );
+};
 
-export default Communities
-const CommunityCard=({data}:{data:CommunityType})=>{
-  return(
-<Card>
-  <Card.Section>
-   <Image src={data.image} width={48} height={48} alt='logo_community'/>
-   <Stack>
-   <Text c='rgb(255 255 255)' style={{fontSize:'16px',lineHeight:'140%'}} fw={700}>{data.name}</Text>
-   <Text c='rgb(105 124 137)' style={{fontSize:'14px',lineHeight:'140%'}} fw={500}>{data.email}</Text>
-   </Stack>
-  </Card.Section>
-  <Card.Section>
-  <Text c='rgb(105 124 137)' style={{fontSize:'13px',lineHeight:'140%'}} fw={500}>{data.bio}</Text>
-  </Card.Section>
-  <Card.Section>
-   <Button>
+export default Communities;
 
-   </Button>
-  </Card.Section>
- </Card>
-  )
-  
+const CommunityCard = ({ data }: { data: CommunityType }) => {
+const [url, setUrl] = useState<string>()
 
-}
 
+
+useEffect(()=>{
+    const publicUrl = supabase
+    .storage
+    .from('Clone_Blog')
+    .getPublicUrl(`logo_communities/${data.name}`)
+    setUrl(publicUrl?.data?.publicUrl)
+  },[])
+  return (
+    <Card  style={{width:'60%',marginTop:'2.25rem'}} radius='lg' padding='lg'>
+        <Group>
+         <Image
+           style={{borderRadius:'100px'}}
+            src={url?url:logo}
+            width={48}
+            height={48}
+            alt="logo_community"
+          /> 
+          <Stack gap={0}>
+            <Text
+              c="rgb(255 255 255)"
+              style={{ fontSize: "16px", lineHeight: "140%" }}
+              fw={700}
+            >
+              {data.name} 
+            </Text>
+            <Text
+              c="rgb(105 124 137)"
+              style={{ fontSize: "14px", lineHeight: "140%" }}
+              fw={500}
+            >
+              {data.email} 
+            </Text>
+          </Stack>
+        </Group>
+
+        <Text mt={20}
+          c="rgb(105 124 137)"
+          style={{ fontSize: "13px", lineHeight: "140%" }}
+          fw={500}
+        >
+           {data.bio}
+        </Text>
+        <Link href={`/communities/${data.id}`}>
+        <Button w={100}  mt={20} color="rgb(135 126 255)">View</Button>
+        </Link>
+        
+
+    </Card>
+  );
+};

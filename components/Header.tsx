@@ -17,10 +17,10 @@ import {
   FileButton,
 } from "@mantine/core";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
 import { Session } from "next-auth";
-import { addNewCommunities,UploadLogo } from "@/configs/postsConfigs";
+import { addNewCommunities, UploadLogo } from "@/configs/postsConfigs";
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -151,7 +151,6 @@ const ItemAdd = ({ openMenu }) => {
         centered
       >
         <MyForm closeAll={closeAll} />
-        {/*  <Button onClick={closeAll}>Create</Button> */}
       </Modal>
     </>
   );
@@ -161,6 +160,8 @@ const MyForm = ({ closeAll }) => {
   const [file, setFile] = useState<File | null>(null);
   const [link, setLink] = useState();
 
+  const reader = new FileReader();
+
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
@@ -168,15 +169,13 @@ const MyForm = ({ closeAll }) => {
       email: "",
     },
   });
-  console.log(file);
-  if (file) console.log(URL.createObjectURL(file!));
 
   type FormValues = {
     name: string;
     bio: string;
     email: string;
   };
-  console.log(session?.user?.name)
+  console.log(session?.user?.name);
   const submitForm: SubmitHandler<FormValues> = async (data) => {
     const { name, bio, email } = data;
     const image = URL.createObjectURL(file!);
@@ -187,15 +186,14 @@ const MyForm = ({ closeAll }) => {
       bio: bio,
       email: email,
     };
+
     await addNewCommunities(objData);
-    await UploadLogo(file?.name,file)
+    await UploadLogo(name, file);
     reset();
     closeAll();
   };
-  const preview = () => {
-    const image = URL.createObjectURL(file!);
-    return <Image src={image} width={80} height={80} alt="image" />;
-  };
+  const preview = () => {};
+
   return (
     <>
       <form onSubmit={handleSubmit(submitForm)}>

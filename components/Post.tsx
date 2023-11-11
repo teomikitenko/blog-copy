@@ -24,6 +24,7 @@ export type PostType={
 
 const Post = ({p,back='#212529'}:PostProps) => {
     const [like, setlike] = useState(0)
+    console.log(p)
   return (
     <Card key={p?.id} style={{display:'flex'}} bg={back}  shadow="sm" p={35}  >
     <Card.Section>
