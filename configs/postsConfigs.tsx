@@ -1,6 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 export const supabase=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
+type CommunityType={
+  creator:string|null|undefined,
+  name:string,
+  image:string,
+  bio:string,
+  email:string 
+ }
+
 export const createPost= async(creater:any,text:string)=>{
    await supabase
   .from('posts_users')
@@ -54,14 +62,7 @@ export const searchUser=async(id:number|string)=>{
    .select() 
   return user
 }
-export const searchUserByName=async(name:string)=>{
-  let { data: user, error } = await supabase
-  .from('table_users')
-  .select()
-  .eq('name',name)
-   .select() 
-  return user
-}
+
 export const searchUserName=async(name:string)=>{
   let { data: user, error } = await supabase
   .from('table_users')
@@ -70,13 +71,7 @@ export const searchUserName=async(name:string)=>{
    .select() 
   return user![0]
 }
- type CommunityType={
-  creator:string|null|undefined,
-  name:string,
-  image:string,
-  bio:string,
-  email:string 
- }
+
  
 
 export const addNewCommunities=async({creator,name,image,bio,email} :CommunityType)=>{
@@ -102,6 +97,13 @@ export const searchCommunityByCreater=async(creator:string)=>{
   .from('communities')
   .select()
   .eq('creator',creator)
+ return community
+}
+export const searchCommunityByName=async(name:string)=>{
+  const{data:community,error}=await supabase
+  .from('communities')
+  .select()
+  .eq('name',name)
  return community
 }
 

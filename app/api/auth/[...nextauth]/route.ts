@@ -51,12 +51,10 @@ type UserData={
                 email: { label: "email", type: "email" }
               },
               async authorize(credentials, req){
-                console.log(credentials)
-                console.log(req)
                 const { name, password,email } = credentials as { name: string; password: string;email:string };
                 const currentUser:UserType|undefined=user.find(u=>name === u.name)
                 
-                const searchCurrentCommynity=async()=>{
+                const searchCurrentCommynity=async(name:string)=>{
                   const { data: community, error } = await supabase
                   .from('communities')
                   .select("*")
@@ -64,19 +62,18 @@ type UserData={
                   return community![0]
                 }
                 if(!currentUser){
-                  const myCommunity = await searchCurrentCommynity()
+                  const myCommunity = await searchCurrentCommynity(name)
                   
                   console.log(myCommunity)
                   if(!myCommunity)return null
-                  else{
                     if(myCommunity.email === email&&myCommunity.password === password){
                       const{name,email,password}=myCommunity
                       const community={name:name,email:email,password:password,type:'community'}
-                      return community as unknown  as UserType
+                      return community  as unknown  as UserType 
                     }
                     return null
                    
-                  }
+                  
                 }
                if(name === currentUser.name&&currentUser.email === email&&currentUser.password === password){
                 const currentUser={name:name,email:email,password:password,type:'user'}
@@ -92,7 +89,7 @@ type UserData={
     ],
     callbacks:{
       async signIn({user, account, profile, email, credentials}){
-        console.log(user.type) 
+        console.log(account) 
         try {
              if(user.type === 'user'){
               const { data:userExist, error } = await supabase

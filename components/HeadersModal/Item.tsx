@@ -7,10 +7,10 @@ import ItemAdd from "./ItemAdd";
 import { useEffect, useState } from "react";
 import {
   searchCommunityByCreater,
-  searchUserByName,
+  searchUserName,
+  searchCommunityByName,
 } from "@/configs/postsConfigs";
 import logo from "@/public/assets/logo.svg";
-
 type CommunityType = {
   bio: string;
   created_at: string;
@@ -21,6 +21,14 @@ type CommunityType = {
   name: string;
   password?: string;
 };
+type UserType = {
+  created_at: string;
+  email: string;
+  id: number | string;
+  image: null;
+  name: string;
+  password: null;
+};
 
 const Item = ({
   session,
@@ -30,16 +38,41 @@ const Item = ({
   openMenu: any;
 }) => {
   const [communities, setCommunities] = useState<CommunityType[] | any>([]);
-  const [user, setUser] = useState<any[]>();
+  const [user, setUser] = useState<UserType>();
   const [type, setType] = useState<string>();
-  console.log(session);
+  console.log(user);
 
   useEffect(() => {
-    searchCommunityByCreater(session?.user?.name!).then((res) =>
-      setCommunities(res)
-    );
-    searchUserByName(session?.user?.name!).then((res) => setUser(res));
+    const findCommunity = async () => {
+      const communites = await searchCommunityByCreater(session?.user?.name!);
+      if (communities) {
+        setCommunities(communites);
+        setType("user");
+      }
+      if (communities?.length === 0) {
+        const communityName = await searchCommunityByName(session?.user?.name!);
+        if (communityName && communityName?.length > 0) {
+          const currentUser = await searchUserName(communityName![0].creator);
+          setType("community");
+          setUser(currentUser);
+        }
+      }
+    };
+   findCommunity();
   }, []);
+
+  const signCommunity = (c: CommunityType) => {
+    signIn("credentials", {
+      name: c.name,
+      email: c.email,
+      password: c.password,
+    });
+    setType("community");
+  };
+  const signUser = () => {
+    signIn();
+    setType("user");
+  };
 
   return (
     <Stack>
@@ -64,25 +97,32 @@ const Item = ({
       </Group>
       <Divider size="sm" />
       <Stack>
-        {communities.map((c: CommunityType, index: any) => {
-          return (
-            <Group
-              key={index}
-              onClick={() => signIn("credentials", {
-                      name: c.name,
-                      email: c.email,
-                      password: c.password,
-                    })
-                  
-              }
-              pl={17}
-              gap={33}
-            >
-              <Image src={logo} width={32} height={32} alt="logo" />
-              <Text c="rgba(255, 255, 255, 0.65)">{c.name}</Text>
-            </Group>
-          );
-        })}
+        {communities &&
+          communities.map((c: CommunityType, index: any) => {
+            return (
+              <Group
+                key={index}
+                onClick={() => signCommunity(c)}
+                pl={17}
+                gap={33}
+              >
+                <Image src={logo} width={32} height={32} alt="logo" />
+                <Text c="rgba(255, 255, 255, 0.65)">{c.name}</Text>
+              </Group>
+            );
+          })}
+        {user && (
+          <Group onClick={signUser} pl={17} gap={33}>
+            <Image
+              style={{ borderRadius: "100%" }}
+              src={user.image ? user.image : logo}
+              width={32}
+              height={32}
+              alt="logo"
+            />
+            <Text c="rgba(255, 255, 255, 0.65)">{user?.name}</Text>
+          </Group>
+        )}
 
         <ItemAdd openMenu={openMenu} />
       </Stack>
