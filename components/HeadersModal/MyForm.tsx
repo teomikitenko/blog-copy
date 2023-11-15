@@ -32,15 +32,13 @@ const MyForm = ({ closeAll }) => {
     name: string;
     bio: string;
     email: string;
-    password: string;
+    password: string|number;
   };
   const submitForm: SubmitHandler<FormValues> = async (data) => {
     const { name, bio, email, password } = data;
-    const image = URL.createObjectURL(file!);
     const objData = {
       creator: session?.user?.name,
       name: name,
-      image: image,
       bio: bio,
       email: email,
       password: password,

@@ -2,18 +2,30 @@
 import { Text, Card, Stack, Button, Group } from "@mantine/core";
 import Image from "next/image";
 import logo from "@/public/assets/logo.svg";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/configs/postsConfigs";
 import Link from "next/link";
+import type { UserType } from "./Search";
 
 export type CommunityType = {
-  id:number,
+  id: number;
   creator: string | null | undefined;
   name: string;
   image: string;
   bio: string;
   email: string;
+  community_id: string;
+  members:MembersType[]
 };
+
+export type MembersType={
+  created_at:string,
+  community_id:string|number,
+  name:string,
+  image?:string,
+  email: string;
+  table_users:UserType[]
+}
 const Communities = ({
   communities,
 }: {
@@ -31,57 +43,59 @@ const Communities = ({
 export default Communities;
 
 const CommunityCard = ({ data }: { data: CommunityType }) => {
-const [url, setUrl] = useState<string>()
+  const [url, setUrl] = useState<string>();
 
-
-
-useEffect(()=>{
-    const publicUrl = supabase
-    .storage
-    .from('Clone_Blog')
-    .getPublicUrl(`logo_communities/${data.name}`)
-    setUrl(publicUrl?.data?.publicUrl)
-  },[])
+  useEffect(() => {
+    const publicUrl = supabase.storage
+      .from("Clone_Blog")
+      .getPublicUrl(`logo_communities/${data.name}`);
+    setUrl(publicUrl?.data?.publicUrl);
+  }, []);
   return (
-    <Card  style={{width:'60%',marginTop:'2.25rem'}} radius='lg' padding='lg'>
-        <Group>
-         <Image
-           style={{borderRadius:'100px'}}
-            src={url?url:logo}
-            width={48}
-            height={48}
-            alt="logo_community"
-          /> 
-          <Stack gap={0}>
-            <Text
-              c="rgb(255 255 255)"
-              style={{ fontSize: "16px", lineHeight: "140%" }}
-              fw={700}
-            >
-              {data.name} 
-            </Text>
-            <Text
-              c="rgb(105 124 137)"
-              style={{ fontSize: "14px", lineHeight: "140%" }}
-              fw={500}
-            >
-              {data.email} 
-            </Text>
-          </Stack>
-        </Group>
+    <Card
+      style={{ width: "60%", marginTop: "2.25rem" }}
+      radius="lg"
+      padding="lg"
+    >
+      <Group>
+        <Image
+          style={{ borderRadius: "100px" }}
+          src={url ? url : logo}
+          width={48}
+          height={48}
+          alt="logo_community"
+        />
+        <Stack gap={0}>
+          <Text
+            c="rgb(255 255 255)"
+            style={{ fontSize: "16px", lineHeight: "140%" }}
+            fw={700}
+          >
+            {data.name}
+          </Text>
+          <Text
+            c="rgb(105 124 137)"
+            style={{ fontSize: "14px", lineHeight: "140%" }}
+            fw={500}
+          >
+            {data.email}
+          </Text>
+        </Stack>
+      </Group>
 
-        <Text mt={20}
-          c="rgb(105 124 137)"
-          style={{ fontSize: "13px", lineHeight: "140%" }}
-          fw={500}
-        >
-           {data.bio}
-        </Text>
-        <Link href={`/communities/${data.id}`}>
-        <Button w={100}  mt={20} color="rgb(135 126 255)">View</Button>
-        </Link>
-        
-
+      <Text
+        mt={20}
+        c="rgb(105 124 137)"
+        style={{ fontSize: "13px", lineHeight: "140%" }}
+        fw={500}
+      >
+        {data.bio}
+      </Text>
+      <Link href={`/communities/${data.id}`}>
+        <Button mt={20} color="rgb(135 126 255)">
+          View
+        </Button>
+      </Link>
     </Card>
   );
 };

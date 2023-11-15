@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/logo.svg";
 
-type UserType = {
+export type UserType = {
   id: number;
   created_at: string;
   name: string;
@@ -46,7 +46,7 @@ export const UserCard = ({
   return (
     <Card bg="rgb(0 0 0)">
       <Card.Section>
-        <Group mt="60">
+        <Group  mt="60" >
           <Image src={logo.src} width={48} height={48} alt="avatar" />
           <Group w="90%" justify="space-between">
             <Stack gap={5}>

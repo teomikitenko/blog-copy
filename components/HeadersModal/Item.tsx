@@ -43,7 +43,7 @@ const Item = ({
   console.log(user);
 
   useEffect(() => {
-    const findCommunity = async () => {
+    const currentTypeUser = async () => {
       const communites = await searchCommunityByCreater(session?.user?.name!);
       if (communities) {
         setCommunities(communites);
@@ -58,7 +58,7 @@ const Item = ({
         }
       }
     };
-   findCommunity();
+   currentTypeUser();
   }, []);
 
   const signCommunity = (c: CommunityType) => {
