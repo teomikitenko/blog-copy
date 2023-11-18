@@ -15,9 +15,6 @@ import { useState } from "react";
 const MyForm = ({ closeAll }) => {
   const { data: session, status } = useSession();
   const [file, setFile] = useState<File | null>(null);
-  const [link, setLink] = useState();
-
-  const reader = new FileReader();
 
   const { handleSubmit, reset, control } = useForm({
     defaultValues: {
@@ -32,7 +29,7 @@ const MyForm = ({ closeAll }) => {
     name: string;
     bio: string;
     email: string;
-    password: string|number;
+    password: string | number;
   };
   const submitForm: SubmitHandler<FormValues> = async (data) => {
     const { name, bio, email, password } = data;
@@ -107,8 +104,6 @@ const MyForm = ({ closeAll }) => {
           </Button>
         </Group>
       </form>
-
-      {/*  {file && preview()} */}
     </>
   );
 };

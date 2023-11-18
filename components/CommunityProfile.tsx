@@ -33,7 +33,7 @@ const CommunityProfile = ({
   community: CommunityType;
   imageUrl: { data: { publicUrl: string } };
   admin: any;
-  members:  MembersType[];
+  members:  MembersType[]|null;
 }) => {
   const tab = [
     { text: "threads", icon: reply },
@@ -64,28 +64,18 @@ const CommunityProfile = ({
                 <Text tt="capitalize" size="lg" fw={500} c={"rgb(239 239 239)"}>
                   {t.text}
                 </Text>
-                {/*   {t.text === "threads" && (
-                <p className="counter_threads">{threads?.length}</p>
-              )} */}
               </Group>
             </Tabs.Tab>
           ))}
         </Tabs.List>
         <Tabs.Panel value="threads">
-          {/*     <Stack>
-        {
-        threads?.map(t=>(
-          <Post key={t.id} p={t}/> 
-        ))
-      }
-          </Stack> */}
         </Tabs.Panel>
 
         <Tabs.Panel value="members">
           <Stack gap={30}>
             <UserCard user={admin} admin />
             {community.members.map((u) => {
-              const member = members.filter(m=>m.name === u.name)[0].table_users
+              const member = members?.filter(m=>m.name === u.name)[0].table_users
              return  <Member key={u.name} members={member} user={u} />
             }
             )}

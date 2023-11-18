@@ -31,7 +31,7 @@ const Leftbar = () => {
     <div className="leftbar">
         <div className="leftbar_links_container">
             {nav.map((n:Link)=>(
-                <Link href={n.href}>
+                <Link key={n.name} href={n.href}>
                <div key={n.name} className='link'>
                 <Image src={n.src} 
                     width={28} 

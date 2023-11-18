@@ -3,7 +3,7 @@ import GoogleProviders  from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { createClient } from '@supabase/supabase-js';
 import { AuthOptions } from "next-auth";
-import { type } from "os";
+import { searchUserName } from "@/configs/postsConfigs";
 
 
 type UserData={
@@ -18,24 +18,8 @@ type UserData={
   }
   type UserType=User&UserData
 
-  
 
   const supabase=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
-  const user=[
-    {
-      name:'Julia',
-      email:'julia@gmail.com',  
-      password:'1111'
-      },{
-        name:'Dante',
-        email:'dante@gmail.com',  
-        password:'2222'
-        },{
-          name:'Olexa',
-          email:'olexa@gmail.com',  
-          password:'3333'
-          }
-  ]
 
   const authOptions:AuthOptions={
     providers:[
@@ -52,8 +36,8 @@ type UserData={
               },
               async authorize(credentials, req){
                 const { name, password,email } = credentials as { name: string; password: string;email:string };
-                const currentUser:UserType|undefined=user.find(u=>name === u.name)
-                
+                const currentUser = await searchUserName(name)
+                console.log(currentUser)
                 const searchCurrentCommynity=async(name:string)=>{
                   const { data: community, error } = await supabase
                   .from('communities')
@@ -63,8 +47,6 @@ type UserData={
                 }
                 if(!currentUser){
                   const myCommunity = await searchCurrentCommynity(name)
-                  
-                  console.log(myCommunity)
                   if(!myCommunity)return null
                     if(myCommunity.email === email&&myCommunity.password === password){
                       const{name,email,password}=myCommunity
@@ -87,24 +69,28 @@ type UserData={
 
         
     ],
-    callbacks:{
+     callbacks:{
       async signIn({user, account, profile, email, credentials}){
-        console.log(account) 
+        console.log(profile) 
         try {
-             if(user.type === 'user'){
-              const { data:userExist, error } = await supabase
+          if(profile?.sub){
+            await supabase
+            .from('table_users')
+            .insert([
+              { name: user.name, email: user.email, image:user.image }
+            ])
+            return true
+          }
+            /*  if(user.type === 'user'){ */
+              /* const { data:userExist, error } = await supabase
               .from('table_users')
               .select('*')
-              .eq('name', user.name)
-                if(userExist?.length===0){
-                  await supabase
-                  .from('table_users')
-                  .insert([
-                    { name: user.name, email: user.email, image:user.image },
-                  ])
-                } 
-                return true
-          }  return true
+              .eq('name', user.name) */
+                /* if(userExist?.length===0){ */
+                
+               /*  }  */
+           /*      return true
+          } */  return true
        
         } catch (error) {
           console.log(error)
@@ -112,7 +98,7 @@ type UserData={
         }
       }
     }
-   
+    
    
 }
 
