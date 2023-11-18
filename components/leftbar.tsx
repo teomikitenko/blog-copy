@@ -23,7 +23,7 @@ const Leftbar = () => {
         {name:"Home",href:'/',src:home},
         {name:"Search",href:'/search',src:search},
         {name:"Activity",href:'/activity',src:activity},
-        {name:"Create Thread",href:'/create',src:create},
+        {name:"Create ",href:'/create',src:create},
         {name:"Communities",href:'/communities',src:communities},
         {name:"Profile",href:'/profile',src:profile}
     ]
@@ -31,15 +31,17 @@ const Leftbar = () => {
     <div className="leftbar">
         <div className="leftbar_links_container">
             {nav.map((n:Link)=>(
-                <div key={n.name} className='link'>
+                <Link href={n.href}>
+               <div key={n.name} className='link'>
                 <Image src={n.src} 
                     width={28} 
                     height={28}
                  alt='icon'/>
-                <Link href={n.href}><p>{n.name}</p></Link>
+               <p>{n.name}</p>
                 </div>
+                </Link>
             ))}
-            <div style={{marginTop:'27px'}} className='link'>
+            <div style={{marginTop:'27px'}} className='link link_sign_out'>
              <Image src={logout} 
                 width={28}
                 height={28}

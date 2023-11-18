@@ -7,6 +7,8 @@ import { IconUserCircle } from "@tabler/icons-react";
 import { Text } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import MyMenu from "./HeadersModal/Menu";
+import logout from "@/public/assets/logout.svg"
+import { signOut } from "next-auth/react"
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -17,7 +19,14 @@ const Header = () => {
         <p>Threads</p>
       </Link>
       {status === "authenticated" ? (
-        <MyMenu session={session}>
+        
+    <div className="conteiner_log"> 
+      <div onClick={()=>signOut()} className="header_logout">
+    <Image src={logout} width={24} height={24} alt="logout"/>
+ </div> 
+ <MyMenu session={session}>
+        
+       
           <div style={{ cursor: "pointer" }} className="sighin_container">
             {session.user?.image ? (
               <Image
@@ -33,11 +42,13 @@ const Header = () => {
                 color="var(--mantine-color-blue-filled)"
               />
             )}
-            <p style={{ display: "inline-flex", alignItems: "center" }}>
+            <Text fw={500} size="sm" >
               {session?.user?.name}
-            </p>{" "}
+            </Text>
           </div>
         </MyMenu>
+ </div>
+        
       ) : (
         <Text
           style={{ cursor: "pointer" }}

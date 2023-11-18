@@ -15,7 +15,7 @@ import type { CommunityType, MembersType } from "./Communities";
 import type { UserType } from "./Search";
 import { UserCard } from "./Search";
 import reply from "@/public/assets/reply.svg";
-import members from "@/public/assets/members.svg";
+import membersImg from "@/public/assets/members.svg";
 import request from "@/public/assets/request.svg";
 import { useState } from "react";
 import { IconSend } from "@tabler/icons-react";
@@ -37,7 +37,7 @@ const CommunityProfile = ({
 }) => {
   const tab = [
     { text: "threads", icon: reply },
-    { text: "members", icon: members },
+    { text: "members", icon: membersImg },
     { text: "requests", icon: request },
   ];
   return (

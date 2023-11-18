@@ -1,95 +1,120 @@
 @import '../style/variables';
 @import '../style/zero';
-@import'../app/create/style.scss';
+@import '../style/style';
 
 
 
-.content{
- display: flex;
- width: 100%;
- min-height: 100%;
-}
-header{
+  @media screen and (max-width:770px) {
+    .conteiner_log{
     display: flex;
-    justify-content: space-between;
-    position: fixed;
-    z-index: 300;
-    width: 100%;
-    padding: 0.75rem 1.5rem;
-    background-color: $main-background;
-    .link_header{
+    .header_logout{
         display: flex;
-        gap: 1rem;
-        p{
-            color: $text-color;
-            font-size: 24px;
-            line-height: 140%;
-            font-weight: 700;
+       
+    }    
+}
+    
+    main{
+        flex-direction: column;
+        .content_bar{
+            padding-bottom: 8rem;
+        }
+           .leftbar{
+              position: fixed ;
+              padding-top: 0;
+              z-index: 300;
+              bottom: 0;
+              width: 100%;
+              display: flex;
+              background-color: rgba(16,16,18,.6);
+        backdrop-filter: blur(16px); 
+        border-top-left-radius: 1.5rem;
+        border-top-right-radius: 1.5rem;
+          
+            .leftbar_links_container{
+             padding: 1rem 1.75rem;
+               gap: 0; 
+              display: flex;
+              flex-direction: row;
+               justify-content: space-between; 
+              width: 100%;
+              .link{
+                gap: 9px;
+                display: flex;
+                flex-direction: column;
+                padding: 0;
+                p{
+                    display: inline;
+                    font-size: 12px;
+                    line-height: 16px;
+                    font-weight: 500;
+              }
+            
+              }
+              .link_sign_out{
+                  display: none;
+              }
             }
-    }
-     img{
-        align-self: center;
+            }}
+}
+@media screen and (max-width:640px) {
+    main .leftbar .leftbar_links_container .link p{
+        display: none;
     }
     .sighin_container{
-        display: flex;
-        gap: 10px;
         p{
-            color: $text-color;
-            font-size: large;
-            font-weight:600;
-         }
+            display: none;
+        }
     }
- 
 }
-main{
-    display: flex;
-    min-height: 100%;
-    width: 100%;
-    .leftbar{
-        position: sticky;
-        top: 0;
-        left: 0;
-         height: 100vh; 
-        display: flex;
-        padding-top: 5.5rem;
-     background-color: $main-background;
-    }
-    .leftbar_links_container{
-        width: 100%;
-        gap: 1.7rem;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-        display: flex;
-        
-        flex-direction: column;
-        height: 100%;
-        .link{
-            display: flex;
-            justify-content: flex-start;
-    gap: 1.6rem;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    img{
-        align-self: center;
-    }
-    a{
-        display: flex;
-        align-items: center;
-    }
-            p{
-                 color: $text-color;
-                 font-size: larger;
+@media screen and (min-width:771px) {
+    main{
+         .leftbar{
+               position: sticky; 
+             top: 0; 
+            left: 0;   
+               height: 100vh;   
+              display: flex; 
+             flex-direction: column; 
+             padding-top: 5.5rem; 
+          background-color: $main-background;  
+        }}
+}
+
+
+  @media screen  and  (max-width:1020px) {
+       main .leftbar_links_container{
+            .link{
+                    display: block ;
+              
+        border-radius: 0.5rem;
+        padding: 1rem;  
+        img{
+            align-self: center;
+        }
+         a{
+           display: flex;
+            align-items: center; 
+        } 
+                 p{ 
+                    display: none;
+                     color: $text-color;
+                     font-size: larger;
+                } 
             }
-        }
-        .signout_container{
-            display: flex;
-            
-        p{
-            color: $text-color;
-            font-size: larger;
-        }
-        }
-    }
+            .signout_container{
+                display: flex;
+                
+             p{
+                display: none;
+                color: $text-color;
+                font-size: larger;
+            } 
+            }
+        } 
+    
+  
+  }
+  @media screen and (min-width: 1260px) {
     .right_side_bar{
         background-color: $main-background;
         width: 318px;
@@ -98,60 +123,5 @@ main{
     top: 0;
     height: 100vh;
     }
-    .content_bar{
-        position: sticky;
-        top: 0;
-        padding-top: 5.5rem;
-        flex-grow: 1;
-        padding-left: 2.5rem;
-    padding-right: 2.5rem;
-    background-color: $black-background;
-    }
-}
-.card_posts{
-display: flex;
-flex-direction: column;
-margin-top: 2.25rem;
-gap: 2.5rem;
-}
-.home_page{
-h1{
-    color: $text-color;
-    font-size: 30px;
-    line-height: 140%;
-    font-weight: 700;
-}
-}
+  }
 
-  /*  .mantine-Button-root :hover{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-     background: $main-background  ;
-     transition: all 150ms linear ; 
-}   */
-.counter_threads{
-    font-size: 10px;
-    line-height: 140%;
-    font-weight: 500;
-    padding-top: 0.29rem;
-    padding-bottom: 0.25rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    margin-left: 0.25rem;
-    background-color: rgb(92 92 123)
-}
-.mantine-TextInput-input{
-    background-color: $black-background !important;
-    border: none !important;
-}	
-.mantine-TextInput-wrapper{
-    border: none !important;
-
-}
-.focus_button{
-   &:focus{
-    background: $main-background 
-   }
-}

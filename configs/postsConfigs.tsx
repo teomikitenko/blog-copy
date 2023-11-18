@@ -118,12 +118,12 @@ export const searchCommunityByName=async(name:string)=>{
   .insert({community_id:community_id,name:name,image:image})
   .select()
   }
-  export const checkAllMembers=async(name:any,community_id:any)=>{
+/*   export const checkAllMembers=async(name:any,community_id:any)=>{
     const { data, error } = await supabase
   .from('community')
   .insert({community_id:community_id,name:name})
   .select()
-  }
+  } */
  
   export const SearchCommunity=async(id:string|number)=>{
     const{data:community,error}=await supabase
@@ -139,7 +139,7 @@ export const searchCommunityByName=async(name:string)=>{
     
    return community![0]
   }
-  export const searchMembersData=async(/* name:string */)=>{
+  export const searchMembersData=async()=>{
     const{data:members,error}=await supabase
     .from('members')
     .select(`
