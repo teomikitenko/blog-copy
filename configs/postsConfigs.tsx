@@ -163,3 +163,19 @@ export const searchMembersData = async () => {
 
   return members;
 };
+export const UpdateLike=async(id:string|number,count:string|number)=>{
+  const { data, error } = await supabase
+  .from('posts_users')
+  .update({ like: count })
+  .eq('id', id)
+  .select()
+  return data![0]
+}
+export const takeLike=async(id:string|number)=>{
+  const { data, error } = await supabase
+  .from('posts_users')
+  .select('like')
+  .eq('id', id)
+ return data
+}
+

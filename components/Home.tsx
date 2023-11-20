@@ -6,6 +6,7 @@ type PostType = {
   created_at: string;
   created_by: string;
   text: string | number;
+  like:number
 };
 
 const HomePosts = ({ posts }: { posts?: PostType[]|any }) => {

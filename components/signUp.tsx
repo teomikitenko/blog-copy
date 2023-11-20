@@ -22,9 +22,7 @@ const SignUp = ({ open, close }: { open: boolean; close: any }) => {
         onClose={() => close(false)}
         title="Sign up"
       >
-       
-          <SignUpForm />
-       
+        <SignUpForm />
       </Modal>
     </>
   );
@@ -48,7 +46,7 @@ const SignUpForm = () => {
     password: string | number;
   };
   const submitForm: SubmitHandler<FormValues> = async (data) => {
-    console.log('send')
+    console.log("send");
     await createUser(data);
     reset();
   };

@@ -28,6 +28,7 @@ export type Comm={
   id: number;
   id_post: number;
   text: string;
+  like:number
 }
 const Comments = ({ post, comments }: CommentsProps) => {
   const [value, setValue] = useState("");
