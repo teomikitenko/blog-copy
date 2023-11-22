@@ -1,19 +1,16 @@
-"use client";
+
 import Post from "./Post";
+import { takeAllPosts} from "@/configs/postsConfigs";
+import type { P } from "@/types/types";
 
-type PostType = {
-  id: number;
-  created_at: string;
-  created_by: string;
-  text: string | number;
-  like:number
-};
 
-const HomePosts = ({ posts }: { posts?: PostType[]|any }) => {
+const HomePosts = async({ posts }: { posts?: P[]|any }) => {
+  /* const allUsers=await takeAllPosts() */
+  
   return (
     <div className="card_posts">
-      {posts?.map((p: PostType) => (
-        <Post key={p.id} p={p} />
+      {posts?.map((p: P) => (
+        <Post  key={p.id}  p={p} posts={posts} />
       ))}
     </div>
   );

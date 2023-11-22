@@ -11,35 +11,60 @@ import heartGray from "@/public/assets/heart-gray.svg";
 import heartFilled from "@/public/assets/heart-filled.svg";
 import { useEffect, useState } from "react";
 import type { Comm } from "./Comments";
-import { UpdateLike } from "@/configs/postsConfigs";
-
-export type PostType = {
-  id: number;
-  created_at: string;
-  created_by: string;
-  text: string | number;
-  like: number;
-};
+import {
+  UpdateLike,
+  UpdateTotalLikes,
+  takeAllPosts,
+  takeLike,
+} from "@/configs/postsConfigs";
+import type { P, U } from "@/types/types";
 type PostProps = {
-  p: PostType | Comm | null;
+  p: P | Comm | null;
   back?: string;
+  posts?: P[];
 };
+export const dynamic = "force-dynamic";
 
-const Post = ({ p, back = "#212529" }: PostProps) => {
+const Post = ({ p, back = "#212529", posts }: PostProps) => {
   const [like, setLike] = useState<number>(p?.like!);
   const [pushed, setPushed] = useState(false);
   const [click, setClick] = useState(false);
-
+  const [total, setTotal] = useState(
+    posts
+      ?.filter((post) => post.created_by === p?.created_by)
+      .reduce((sum, current) => sum + current.like, 0)
+  );
   useEffect(() => {
     const changeLike = async () => {
       const result = await UpdateLike(p?.id!, like!);
-      return result;
+
+      const posts = await fetch("http://localhost:3000/api/posts", {
+        cache: "no-store",
+      });
+      return await posts.json();
     };
-    if(click)changeLike().then((res) => console.log(res));
+    if (click)
+      changeLike().then((res) =>
+        setTotal(
+          res
+            ?.filter((post: P) => post.created_by === p?.created_by)
+            .reduce((sum: any, current: P) => sum + current.like, 0)
+        )
+      );
   }, [like]);
+
+  useEffect(() => {
+    const changeTotalLikes = async () => {
+      const totalLikes = await UpdateTotalLikes(p?.created_by!, total!);
+      return totalLikes;
+    };
+    if (click) changeTotalLikes().then((res) => console.log(res));
+  }, [total]);
+
   useEffect(() => {
     if (click) {
       setLike(pushed ? like + 1 : like - 1);
+      setTotal(pushed ? (total as number) + 1 : (total as number) - 1);
     }
   }, [pushed]);
   const likeHandler = () => {
@@ -64,17 +89,18 @@ const Post = ({ p, back = "#212529" }: PostProps) => {
             <Text c={"rgb(255 255 255)"} fw={400}>
               {p?.text}
             </Text>
-            <Group mt={10}  align="flex-start">
-             <Group align="center"  justify="center" gap={5}>
-             <Image
-                style={{ cursor: "pointer" }}
-                onClick={likeHandler}
-                src={pushed ? heartFilled : heartGray.src}
-                width={27}
-                height={27}
-                alt="heart-gray"
-              /> <span>{like}</span>
-              </Group> 
+            <Group mt={10} align="flex-start">
+              <Group align="center" justify="center" gap={5}>
+                <Image
+                  style={{ cursor: "pointer" }}
+                  onClick={likeHandler}
+                  src={pushed ? heartFilled : heartGray.src}
+                  width={27}
+                  height={27}
+                  alt="heart-gray"
+                />
+                <span>{like}</span>
+              </Group>
               <Link href={`/thread/${p?.id}`}>
                 <Image src={reply.src} width={27} height={27} alt="reply" />
               </Link>

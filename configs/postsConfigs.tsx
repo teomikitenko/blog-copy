@@ -46,6 +46,7 @@ export const takeAllPosts = async () => {
   const { data: posts, error } = await supabase.from("posts_users").select();
   return posts;
 };
+
 export const createComment = async (creater: any, text: any, id: number) => {
   await supabase
     .from("user_comments")
@@ -171,11 +172,27 @@ export const UpdateLike=async(id:string|number,count:string|number)=>{
   .select()
   return data![0]
 }
-export const takeLike=async(id:string|number)=>{
+export const takeLike=async(name:string|number)=>{
   const { data, error } = await supabase
-  .from('posts_users')
+  .from('table_users')
+  .select('total_likes')
+  .eq('name', name)
+ return data
+}
+export const takeTotalLike=async(id:string|number)=>{
+  const { data, error } = await supabase
+  .from('table_users')
   .select('like')
   .eq('id', id)
  return data
+}
+
+export const UpdateTotalLikes=async(name:string,count:string|number)=>{
+  const { data, error } = await supabase
+  .from('table_users')
+  .update({ total_likes: count })
+  .eq('name', name)
+  .select()
+  return data![0]
 }
 

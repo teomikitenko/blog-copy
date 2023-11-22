@@ -6,15 +6,9 @@ import tag from "@/public/assets/tag.svg";
 import Image from "next/image";
 import logo from "@/public/assets/logo.svg";
 import Post from "./Post";
+import type { U } from "@/types/types";
 
-
-type UserProfile = {
-  name?: string | null;
-  email?: string | null;
-  image?: string | null;
-};
-
-const Profile = ({ user,threads }: { user: UserProfile | undefined | null,threads:any[]|null }) => {
+const Profile = ({ user,threads }: { user: U| undefined | null,threads:any[]|null }) => {
   const tab = [
     { text: "threads", icon: reply },
     { text: "replies", icon: members },
