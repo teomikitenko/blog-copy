@@ -16,40 +16,31 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { createComment, searchComment } from "@/configs/postsConfigs";
 
-import { takeAllPosts, takePost } from "@/configs/postsConfigs";
-import type { PostType } from "./Post";
+import type { P, CommentsType } from "@/types/types";
 type CommentsProps = {
-  post: PostType | /* null */ any ;
-  comments:Comm[] | any
+  post: P | /* null */ any;
+  comments: CommentsType[] | any;
 };
-export type Comm={
-  created_at: string;
-  created_by: string;
-  id: number;
-  id_post: number;
-  text: string;
-  like:number
-}
+
 const Comments = ({ post, comments }: CommentsProps) => {
   const [value, setValue] = useState("");
   const [comment, setComment] = useState(comments);
   const [postUser, setPostUser] = useState(post);
-console.log(comments)
+  console.log(comments);
   const { data: session, status } = useSession();
-  const addComment = async() => {
+  const addComment = async () => {
     await createComment(session?.user?.name, value, postUser[0].id);
-    const updateComments=await searchComment(postUser[0].id)
-    setComment(updateComments)
-    setValue('')
-
+    const updateComments = await searchComment(postUser[0].id);
+    setComment(updateComments);
+    setValue("");
   };
-  useEffect(()=>{
-  setComment(comments)
- },[]) 
+  useEffect(() => {
+    setComment(comments);
+  }, []);
   return (
     <>
       <Post key={postUser[0].id} p={postUser[0]} />
-   
+
       <Divider my="sm" />
       <Group w={"100%"} my={25}>
         <Image src={logo} width={48} height={48} alt="avatar" />
@@ -66,14 +57,12 @@ console.log(comments)
         </Button>
       </Group>
       <Divider my="sm" />
-       <Stack>
-      {comment&&comment.map((c:Comm)=>(
-        <Post key={c?.id} back='rgb(0 0 0)' p={c}/>
-      )
-        
-      )} 
-      </Stack> 
-    
+      <Stack>
+        {comment &&
+          comment.map((c: CommentsType) => (
+            <Post key={c?.id} back="rgb(0 0 0)" p={c} />
+          ))}
+      </Stack>
     </>
   );
 };

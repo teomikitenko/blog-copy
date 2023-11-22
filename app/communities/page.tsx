@@ -1,7 +1,6 @@
 import Communities from "@/components/Communities";
 import { Text } from "@mantine/core";
 import { takeAllCommunities } from "@/configs/postsConfigs";
-import { supabase } from "@/configs/postsConfigs";
 export const revalidate = 0;
 
 const CommunitiesPage = async () => {

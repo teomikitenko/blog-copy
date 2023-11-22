@@ -14,3 +14,30 @@ export type U = {
     text: string | number;
     like:number
   };
+  export type CommunityType = {
+    id: number;
+    creator: string | null | undefined;
+    name: string;
+    image: string;
+    bio: string;
+    email: string;
+    community_id: string;
+    members:MembersType[]
+  };
+  
+  export type MembersType={
+    created_at:string,
+    community_id:string|number,
+    name:string,
+    image?:string,
+    email: string;
+    table_users:U[]
+  }
+  export type CommentsType={
+    created_at: string;
+    created_by: string;
+    id: number;
+    id_post: number;
+    text: string;
+    like:number
+  }

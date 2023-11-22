@@ -5,27 +5,8 @@ import logo from "@/public/assets/logo.svg";
 import { useEffect, useState } from "react";
 import { supabase } from "@/configs/postsConfigs";
 import Link from "next/link";
-import type { UserType } from "./Search";
+import type { CommunityType } from "@/types/types";
 
-export type CommunityType = {
-  id: number;
-  creator: string | null | undefined;
-  name: string;
-  image: string;
-  bio: string;
-  email: string;
-  community_id: string;
-  members:MembersType[]
-};
-
-export type MembersType={
-  created_at:string,
-  community_id:string|number,
-  name:string,
-  image?:string,
-  email: string;
-  table_users:UserType[]
-}
 const Communities = ({
   communities,
 }: {

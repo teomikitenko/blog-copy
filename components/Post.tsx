@@ -10,16 +10,14 @@ import reply from "@/public/assets/reply.svg";
 import heartGray from "@/public/assets/heart-gray.svg";
 import heartFilled from "@/public/assets/heart-filled.svg";
 import { useEffect, useState } from "react";
-import type { Comm } from "./Comments";
+import type { CommentsType } from "@/types/types";
 import {
   UpdateLike,
   UpdateTotalLikes,
-  takeAllPosts,
-  takeLike,
 } from "@/configs/postsConfigs";
 import type { P, U } from "@/types/types";
 type PostProps = {
-  p: P | Comm | null;
+  p: P | CommentsType | null;
   back?: string;
   posts?: P[];
 };
@@ -58,7 +56,7 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
       const totalLikes = await UpdateTotalLikes(p?.created_by!, total!);
       return totalLikes;
     };
-    if (click) changeTotalLikes().then((res) => console.log(res));
+    if (click) changeTotalLikes()
   }, [total]);
 
   useEffect(() => {
