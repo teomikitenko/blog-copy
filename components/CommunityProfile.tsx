@@ -11,8 +11,7 @@ import {
   Badge,
 } from "@mantine/core";
 import Image from "next/image";
-import type { CommunityType, MembersType } from "./Communities";
-import type { UserType } from "./Search";
+import { CommunityType,MembersType } from "@/types/types";
 import { UserCard } from "./Search";
 import reply from "@/public/assets/reply.svg";
 import membersImg from "@/public/assets/members.svg";
