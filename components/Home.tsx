@@ -1,7 +1,7 @@
 import Post from "./Post";
 import type { P } from "@/types/types";
 
-const HomePosts = async ({ posts }: { posts?: P[] | any }) => {
+const HomePosts =  ({ posts }: { posts?: P[] | any }) => {
   return (
     <div className="card_posts">
       {posts?.map((p: P) => (

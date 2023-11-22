@@ -16,7 +16,6 @@ export default async function HomePage() {
       >
         Home
       </Text>
-      {/* @ts-expect-error Server Component */}
       <HomePosts posts={data} />
     </div>
   );
