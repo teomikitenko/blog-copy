@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import ItemAdd from "./ItemAdd";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   searchCommunityByCreater,
   searchUserName,
@@ -35,7 +35,7 @@ const Item = ({
   openMenu,
 }: {
   session: Session | null;
-  openMenu: any;
+  openMenu:  Dispatch<SetStateAction<boolean>>;
 }) => {
   const [communities, setCommunities] = useState<CommunityType[] | any>([]);
   const [user, setUser] = useState<UserType>();

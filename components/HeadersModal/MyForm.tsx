@@ -11,8 +11,8 @@ import {
 } from "@mantine/core";
 import { IconDownload } from "@tabler/icons-react";
 import { useState } from "react";
-
-const MyForm = ({ closeAll }) => {
+type CloseFunction=() => any;
+const MyForm = ({ closeAll }:{closeAll:CloseFunction} ) => {
   const { data: session, status } = useSession();
   const [file, setFile] = useState<File | null>(null);
 

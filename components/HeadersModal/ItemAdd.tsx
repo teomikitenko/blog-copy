@@ -1,10 +1,10 @@
 import { Group, Modal, ThemeIcon,Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import MyForm from "./MyForm";
 
 
-const ItemAdd = ({ openMenu }) => {
+const ItemAdd = ({ openMenu }:{openMenu: Dispatch<SetStateAction<boolean>>}) => {
     const [opened, setOpened] = useState(false);
     const closeAll = () => {
       setOpened(false);
