@@ -41,3 +41,10 @@ export type U = {
     text: string;
     like:number
   }
+export  type DefaultUserSession =
+  | {
+      name?: string | null | undefined;
+      email?: string | null | undefined;
+      image?: string | null | undefined;
+    }
+  | undefined;

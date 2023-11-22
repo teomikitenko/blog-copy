@@ -6,9 +6,15 @@ import tag from "@/public/assets/tag.svg";
 import Image from "next/image";
 import logo from "@/public/assets/logo.svg";
 import Post from "./Post";
-import type { U } from "@/types/types";
+import { DefaultUserSession } from "@/types/types";
 
-const Profile = ({ user,threads }: { user: U| undefined | null,threads:any[]|null }) => {
+const Profile = ({
+  user,
+  threads,
+}: {
+  user: DefaultUserSession;
+  threads: any[] | null;
+}) => {
   const tab = [
     { text: "threads", icon: reply },
     { text: "replies", icon: members },
@@ -29,7 +35,6 @@ const Profile = ({ user,threads }: { user: U| undefined | null,threads:any[]|nul
       </Group>
       <Divider my="sm" />
       <Tabs
-      
         color="rgb(14 14 18)"
         variant="pills"
         defaultValue="threads"
@@ -42,7 +47,7 @@ const Profile = ({ user,threads }: { user: U| undefined | null,threads:any[]|nul
           justify="center"
           grow={true}
         >
-          {tab.map((t,index) => (
+          {tab.map((t, index) => (
             <Tabs.Tab key={index} value={t.text}>
               <Group>
                 <Image src={t.icon} width={24} height={24} alt="icon" />
@@ -58,13 +63,11 @@ const Profile = ({ user,threads }: { user: U| undefined | null,threads:any[]|nul
         </Tabs.List>
         <Tabs.Panel value="threads">
           <Stack>
-          {
-          threads?.map(t=>(
-            <Post key={t.id} p={t}/> 
-          ))
-        }
-            </Stack>
-            </Tabs.Panel>
+            {threads?.map((t) => (
+              <Post key={t.id} p={t} />
+            ))}
+          </Stack>
+        </Tabs.Panel>
 
         <Tabs.Panel value="replies">0</Tabs.Panel>
 
