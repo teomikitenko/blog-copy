@@ -9,7 +9,7 @@ export async function GET(request: Request) {
             return  NextResponse.json(users) 
         
     } catch (error) {
-        return NextResponse.json({ message: 'error' }, { status: 500 })
+        /* return NextResponse.json({ message: 'error' }, { status: 500 }) */
     }
 
      
