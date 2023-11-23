@@ -1,11 +1,11 @@
 import HomePosts from "@/components/Home";
 import { Text } from "@mantine/core";
 
-export const dynamic = 'force-dynamic'
+
 
 
 export default async function HomePage() {
-   const posts = await fetch("http://localhost:3000/api/posts")
+   const posts = await fetch("http://localhost:3000/api/posts",{ cache: 'no-store' })
   const data = await posts.json(); 
  
   return (
