@@ -4,8 +4,8 @@ import { Text } from "@mantine/core";
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
-   const posts = await fetch("http://localhost:3000/api/posts",{ cache: 'no-store' })
-  const data = await posts.json(); 
+/*    const posts = await fetch("http://localhost:3000/api/posts",{ cache: 'no-store' })
+  const data = await posts.json();  */
  
   return (
     <div className="home_page">
@@ -16,7 +16,7 @@ export default async function HomePage() {
       >
         Home
       </Text>
-      <HomePosts  posts={data}  />
+      <HomePosts  /* posts={data} */  />
     </div>
   );
 }
