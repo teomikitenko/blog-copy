@@ -1,7 +1,7 @@
 import HomePosts from "@/components/Home";
 import { Text } from "@mantine/core";
 
-export const dynamic = 'force-dynamic'
+/* export const dynamic = 'force-dynamic' */
 
 export default async function HomePage() {
     const posts = await fetch("https://blog-copy-kitt.vercel.app/api/posts",{ cache: 'no-store' })
