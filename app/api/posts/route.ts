@@ -8,8 +8,8 @@ export async function GET(request: Request) {
         .select()
             return  NextResponse.json(users) 
         
-    } catch (error:any) {
-        return NextResponse.json({ message: error.message }, { status: 500 })
+    } catch (error) {
+        return NextResponse.json({ message: 'error' }, { status: 500 })
     }
 
      
