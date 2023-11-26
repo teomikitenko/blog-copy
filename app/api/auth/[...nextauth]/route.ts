@@ -22,7 +22,7 @@ type UserData={
 
   const supabase=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
-  const authOptions: NextAuthOptions={
+  export const authOptions: NextAuthOptions={
     providers:[
         GoogleProviders({
             clientId: process.env.GOOGLE_ID as string,
@@ -96,6 +96,6 @@ type UserData={
 
  const handler = NextAuth(authOptions)
   
-export { handler as GET, handler as POST,authOptions }
+export { handler as GET, handler as POST }
 
 
