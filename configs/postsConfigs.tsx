@@ -1,4 +1,6 @@
+import { revalidate } from "@/app/communities/page";
 import { createClient } from "@supabase/supabase-js";
+import { revalidatePath } from "next/cache";
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -9,6 +11,7 @@ type CommunityType = {
   bio: string;
   email: string;
   password: string | number;
+  logo?:File|null
 };
 type U={
   email:string,
@@ -23,10 +26,11 @@ export const createUser = async ({email,name,password,image}:U) => {
     .insert({ email: email, name: name,password:password,image:image });
 };
 
-export const createPost = async (creater: any, text: string) => {
+export const createPost = async (creater: any, text: string|any) => {
   await supabase
     .from("posts_users")
     .insert({ created_by: creater, text: text });
+    
 };
 export const takePost = async (id: number) => {
   const { data: post, error } = await supabase
@@ -89,7 +93,9 @@ export const addNewCommunities = async ({
   bio,
   email,
   password,
+  logo
 }: CommunityType) => {
+  
   let { error } = await supabase
     .from("communities")
     .insert({
@@ -99,6 +105,9 @@ export const addNewCommunities = async ({
       email: email,
       password: password,
     });
+
+    await UploadLogo(name,logo as File)
+    
 };
 export const takeAllCommunities = async () => {
   const { data: communities, error } = await supabase
@@ -122,10 +131,10 @@ export const searchCommunityByName = async (name: string) => {
   return community;
 };
 
-export const UploadLogo = async (name: any, logo: any) => {
+export const UploadLogo = async (name: any, logo: File|undefined) => {
   const { data, error } = await supabase.storage
     .from("Clone_Blog")
-    .upload(`logo_communities/${name}`, logo, {
+    .upload(`logo_communities/${name}`, logo as File, {
       cacheControl: "3600",
       upsert: false,
     });

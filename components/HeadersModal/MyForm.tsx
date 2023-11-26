@@ -11,10 +11,12 @@ import {
 } from "@mantine/core";
 import { IconDownload } from "@tabler/icons-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 type CloseFunction=() => any;
 const MyForm = ({ closeAll }:{closeAll:CloseFunction} ) => {
   const { data: session, status } = useSession();
   const [file, setFile] = useState<File | null>(null);
+  const router = useRouter()
 
   const { handleSubmit, reset, control } = useForm({
     defaultValues: {
@@ -32,6 +34,7 @@ const MyForm = ({ closeAll }:{closeAll:CloseFunction} ) => {
     password: string | number;
   };
   const submitForm: SubmitHandler<FormValues> = async (data) => {
+   
     const { name, bio, email, password } = data;
     const objData = {
       creator: session?.user?.name,
@@ -39,16 +42,15 @@ const MyForm = ({ closeAll }:{closeAll:CloseFunction} ) => {
       bio: bio,
       email: email,
       password: password,
+      logo:file
     };
-
     await addNewCommunities(objData);
-    await UploadLogo(name, file);
-    reset();
     closeAll();
+    router.refresh()
   };
   return (
     <>
-      <form onSubmit={handleSubmit(submitForm)}>
+      <form  onSubmit={handleSubmit(submitForm)} >
         <Stack>
           <Group gap={15}>
             <IconDownload size={47} />

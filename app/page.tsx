@@ -2,13 +2,11 @@ import HomePosts from "@/components/Home";
 import { Text } from "@mantine/core";
 
 export default async function HomePage() {
- /*  const posts = await fetch("https://blog-copy-kitt.vercel.app/api/posts", {
+   const posts = await fetch("https://blog-copy-kitt.vercel.app/api/posts", {
     cache: "no-store",
-  }); */ //for prod//
-  const posts = await fetch("https://blog-copy-kitt.vercel.app/api/posts", {
-    cache: "no-store",
-  });
-  const data = await posts.json();
+  }); 
+
+  const data = await posts.json(); 
 
   return (
     <div className="home_page">
@@ -19,7 +17,7 @@ export default async function HomePage() {
       >
         Home
       </Text>
-      <HomePosts posts={data} />
+      <HomePosts  posts={data} />
     </div>
   );
 }

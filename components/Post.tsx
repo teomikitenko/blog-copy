@@ -11,11 +11,10 @@ import heartGray from "@/public/assets/heart-gray.svg";
 import heartFilled from "@/public/assets/heart-filled.svg";
 import { useEffect, useState } from "react";
 import type { CommentsType } from "@/types/types";
-import {
-  UpdateLike,
-  UpdateTotalLikes,
-} from "@/configs/postsConfigs";
+import { UpdateLike, UpdateTotalLikes } from "@/configs/postsConfigs";
 import type { P, U } from "@/types/types";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 type PostProps = {
   p: P | CommentsType | null;
   back?: string;
@@ -24,18 +23,21 @@ type PostProps = {
 export const dynamic = "force-dynamic";
 
 const Post = ({ p, back = "#212529", posts }: PostProps) => {
+  const { data: session, status } = useSession();
+  const router = useRouter()
   const [like, setLike] = useState<number>(p?.like!);
   const [pushed, setPushed] = useState(false);
   const [click, setClick] = useState(false);
+  const[errorMessage,setErrorMessage]=useState(false)
   const [total, setTotal] = useState(
     posts
       ?.filter((post) => post.created_by === p?.created_by)
       .reduce((sum, current) => sum + current.like, 0)
   );
+  useEffect(()=>router.refresh(),[])
   useEffect(() => {
     const changeLike = async () => {
       const result = await UpdateLike(p?.id!, like!);
-
       const posts = await fetch("http://localhost:3000/api/posts", {
         cache: "no-store",
       });
@@ -56,7 +58,7 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
       const totalLikes = await UpdateTotalLikes(p?.created_by!, total!);
       return totalLikes;
     };
-    if (click) changeTotalLikes()
+    if (click) changeTotalLikes();
   }, [total]);
 
   useEffect(() => {
@@ -66,8 +68,14 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
     }
   }, [pushed]);
   const likeHandler = () => {
-    setClick(true);
-    setPushed(!pushed);
+    if(status === "authenticated"){
+      setErrorMessage(false)
+      setClick(true);
+      setPushed(!pushed);
+    }else{
+      setErrorMessage(!errorMessage)
+    }
+  
   };
   return (
     <Card key={p?.id} style={{ display: "flex" }} bg={back} shadow="sm" p={35}>
@@ -87,7 +95,7 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
             <Text c={"rgb(255 255 255)"} fw={400}>
               {p?.text}
             </Text>
-            <Group mt={10} align="flex-start">
+            <Group mt={10} align="flex-start"> 
               <Group align="center" justify="center" gap={5}>
                 <Image
                   style={{ cursor: "pointer" }}
@@ -116,7 +124,10 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
                 height={27}
                 alt="share"
               />
+           
+           {errorMessage&& <Text p={0} m={0} c="red">No Authorized</Text>}
             </Group>
+           
           </Stack>
         </Group>
       </Card.Section>
