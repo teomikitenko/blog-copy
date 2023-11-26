@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { createClient } from '@supabase/supabase-js';
 import { AuthOptions } from "next-auth";
 import { searchUserName } from "@/configs/postsConfigs";
+import type { NextAuthOptions } from "next-auth";
 
 
 type UserData={
@@ -21,7 +22,7 @@ type UserData={
 
   const supabase=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
-  const authOptions:AuthOptions={
+  const authOptions: NextAuthOptions={
     providers:[
         GoogleProviders({
             clientId: process.env.GOOGLE_ID as string,
@@ -71,7 +72,6 @@ type UserData={
     ],
      callbacks:{
       async signIn({user, account, profile, email, credentials}){
-        console.log(profile) 
         try {
           if(profile?.sub){
             await supabase
@@ -81,16 +81,7 @@ type UserData={
             ])
             return true
           }
-            /*  if(user.type === 'user'){ */
-              /* const { data:userExist, error } = await supabase
-              .from('table_users')
-              .select('*')
-              .eq('name', user.name) */
-                /* if(userExist?.length===0){ */
-                
-               /*  }  */
-           /*      return true
-          } */  return true
+           return true
        
         } catch (error) {
           console.log(error)
