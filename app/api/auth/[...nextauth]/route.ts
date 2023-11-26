@@ -2,7 +2,7 @@ import NextAuth, { User } from "next-auth"
 import GoogleProviders  from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { createClient } from '@supabase/supabase-js';
-import { AuthOptions } from "next-auth";
+import type { AuthOptions } from "next-auth";
 import { searchUserName } from "@/configs/postsConfigs";
 import type { NextAuthOptions } from "next-auth";
 
@@ -22,7 +22,7 @@ type UserData={
 
   const supabase=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
-  export const authOptions: NextAuthOptions={
+ const authOptions: AuthOptions={
     providers:[
         GoogleProviders({
             clientId: process.env.GOOGLE_ID as string,
@@ -96,6 +96,6 @@ type UserData={
 
  const handler = NextAuth(authOptions)
   
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST,authOptions }
 
 
