@@ -2,9 +2,10 @@ import HomePosts from "@/components/Home";
 import { Text } from "@mantine/core";
 
 export default async function HomePage() {
-   const posts = await fetch("https://blog-copy-kitt.vercel.app/api/posts", {
+    const posts = await fetch("https://blog-copy-kitt.vercel.app/api/posts", {
     cache: "no-store",
-  }); 
+  });  
+
 
   const data = await posts.json(); 
 

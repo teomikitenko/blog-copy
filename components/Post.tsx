@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import type { CommentsType } from "@/types/types";
 import { UpdateLike, UpdateTotalLikes } from "@/configs/postsConfigs";
 import type { P, U } from "@/types/types";
-import { useSession } from "next-auth/react";
+import { useSession,signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 type PostProps = {
   p: P | CommentsType | null;
@@ -28,7 +28,6 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
   const [like, setLike] = useState<number>(p?.like!);
   const [pushed, setPushed] = useState(false);
   const [click, setClick] = useState(false);
-  const[errorMessage,setErrorMessage]=useState(false)
   const [total, setTotal] = useState(
     posts
       ?.filter((post) => post.created_by === p?.created_by)
@@ -69,11 +68,10 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
   }, [pushed]);
   const likeHandler = () => {
     if(status === "authenticated"){
-      setErrorMessage(false)
       setClick(true);
       setPushed(!pushed);
     }else{
-      setErrorMessage(!errorMessage)
+      signIn()
     }
   
   };
@@ -125,7 +123,7 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
                 alt="share"
               />
            
-           {errorMessage&& <Text p={0} m={0} c="red">No Authorized</Text>}
+         
             </Group>
            
           </Stack>
