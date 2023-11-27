@@ -4,11 +4,11 @@ import Link from "next/link";
 import logo from "@/public/assets/logo.svg";
 import { useSession } from "next-auth/react";
 import { Button, Group, Text } from "@mantine/core";
-import { signIn } from "next-auth/react";
-import MyMenu from "./HeadersModal/Menu";
+import { signIn } from "next-auth/react"; 
+ import MyMenu from "./HeadersModal/Menu";
 import logout from "@/public/assets/logout.svg";
-import { signOut } from "next-auth/react";
-import SignUp from "./signUp";
+ import { signOut } from "next-auth/react";
+ import SignUp from "./signUp";
 import { IconUserCircle, IconUserPlus, IconLogin2 } from "@tabler/icons-react";
 import { useState } from "react";
 const Header = () => {
@@ -21,7 +21,7 @@ const Header = () => {
       </Link>
       {status === "authenticated" ? (
         <div className="conteiner_log">
-          <div onClick={() => signOut()} className="header_logout">
+          <div onClick={() =>  signOut()} className="header_logout">
             <Image src={logout} width={24} height={24} alt="logout" />
           </div>
           <MyMenu session={session}>
@@ -68,7 +68,7 @@ const NoAuth=()=>{
     </Button>
 
     <Button
-      onClick={() => signIn()}
+      onClick={() =>  signIn()}
       leftSection={<IconLogin2 color="rgb(255 255 255)" size={24} />}
       variant="transparent"
     >

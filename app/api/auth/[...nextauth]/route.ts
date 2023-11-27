@@ -4,7 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { createClient } from "@supabase/supabase-js";
 import type { AuthOptions } from "next-auth";
 import { searchUserName } from "@/configs/postsConfigs";
-import type { NextAuthOptions } from "next-auth";
 
 type UserData = {
   password: string;
