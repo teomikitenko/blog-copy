@@ -1,4 +1,4 @@
-"use client";
+ "use client"
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/logo.svg";
@@ -6,8 +6,7 @@ import { useSession } from "next-auth/react";
 import { Button, Group, Text } from "@mantine/core";
  import { signIn } from "next-auth/react"; 
   import MyMenu from "./HeadersModal/Menu";
-/*   import { signIn,signOut } from "@/configs/auth";
- */ import logout from "@/public/assets/logout.svg";
+ import logout from "@/public/assets/logout.svg";
  import { signOut } from "next-auth/react";
   import SignUp from "./signUp";
 import { IconUserCircle, IconUserPlus, IconLogin2 } from "@tabler/icons-react";

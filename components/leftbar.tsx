@@ -41,7 +41,7 @@ const Leftbar = () => {
                 </div>
                 </Link>
             ))}
-            <div style={{marginTop:'27px'}} className='link link_sign_out'>
+            <div style={{marginTop:'12px'}} className='link link_sign_out'>
              <Image src={logout} 
                 width={28}
                 height={28}
