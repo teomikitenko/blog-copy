@@ -1,14 +1,8 @@
-
-import { handlers } from "@/configs/auth"
-export const { GET, POST } = handlers
-
-
-
-/* import NextAuth, { User } from "next-auth";
+import type { NextAuthConfig } from "next-auth"
+import NextAuth, { User } from "next-auth";
 import GoogleProviders from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createClient } from "@supabase/supabase-js";
-import type { AuthOptions } from "next-auth";
 import { searchUserName } from "@/configs/postsConfigs";
 
 type UserData = {
@@ -28,7 +22,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-const authOptions: AuthOptions = {
+export const config = {
   providers: [
     GoogleProviders({
       clientId: process.env.GOOGLE_ID as string,
@@ -94,12 +88,13 @@ const authOptions: AuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
+      console.log(profile)
       try {
         if (profile?.sub) {
           await supabase
             .from("table_users")
             .insert([
-              { name: user.name, email: user.email, image: user.image },
+              { name: user?.name||profile?.name, email: user?.email||profile?.email, image: user?.image||profile?.picture },
             ]);
           return true;
         }
@@ -110,8 +105,7 @@ const authOptions: AuthOptions = {
       }
     },
   },
-}; */
+} satisfies NextAuthConfig ;
 
-/* const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST, authOptions }; */
+export const { handlers, auth, signIn, signOut } = NextAuth(config)
