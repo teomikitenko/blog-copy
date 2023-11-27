@@ -17,7 +17,7 @@ const Header = () => {
     <>
       <Link href={"/"} className="link_header">
         <Image src={logo} width={28} height={28} alt="logo" />
-        <p>Threads</p>
+        <Text visibleFrom='xs'>Threads</Text>
       </Link>
       {status === "authenticated" ? (
         <div className="conteiner_log">

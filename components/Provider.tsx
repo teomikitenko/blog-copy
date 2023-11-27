@@ -1,4 +1,5 @@
 'use client'
+import { rem, em } from '@mantine/core';
 import { Button, MantineProvider,createTheme,PartialVarsResolver, ButtonFactory, CSSVariablesResolver } from "@mantine/core";
 import { SessionProvider } from "next-auth/react"
 import { ReactNode } from "react";
@@ -10,7 +11,7 @@ type Children={
 }
  const theme=createTheme({
   breakpoints: {
-    xs: '30em',
+    xs: em('400px'),
     sm: '48em',
     md: '64em',
     lg: '74em',

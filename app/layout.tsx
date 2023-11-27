@@ -39,7 +39,10 @@ export default function RootLayout({
           </header>
         <main className={inter.className}>
           <section className='left_side_bar'>
+            <Provider>
             <Leftbar/>
+            </Provider>
+            
           </section>
           <section className='content_bar'>
           <Provider>

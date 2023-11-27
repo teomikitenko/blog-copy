@@ -1,5 +1,5 @@
 "use client";
-import { Card, Text, Group, Stack, Badge } from "@mantine/core";
+import { Card, Text, Group, Stack } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import "@mantine/core/styles/Card.css";
