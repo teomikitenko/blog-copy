@@ -13,7 +13,7 @@ type Children={
   breakpoints: {
     xs: em('400px'),
     sm: '48em',
-    md: '64em',
+    md: em('640px'),
     lg: '74em',
     xl: '90em',
   },

@@ -57,6 +57,10 @@
             }}
 }
 @media screen and (max-width:640px) {
+    .card_community{
+     width: 100%;
+    }
+
     main .leftbar .leftbar_links_container .link p{
         display: none;
     }

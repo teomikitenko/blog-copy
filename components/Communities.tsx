@@ -34,7 +34,7 @@ const CommunityCard = ({ data }: { data: CommunityType }) => {
   }, []);
   return (
     <Card
-      style={{ width: "60%", marginTop: "2.25rem" }}
+    className="card_community"
       radius="lg"
       padding="lg"
     >

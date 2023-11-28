@@ -64,7 +64,7 @@ const NoAuth=()=>{
       leftSection={<IconUserPlus color="rgb(255 255 255)" size={24} />}
       variant="transparent"
     >
-      <Text size="lg" fw={600}  c={"rgb(255 255 255)"}>Sign up</Text>
+      <Text visibleFrom="md" size="lg" fw={600}  c={"rgb(255 255 255)"}>Sign up</Text>
     </Button>
 
     <Button
@@ -72,7 +72,7 @@ const NoAuth=()=>{
       leftSection={<IconLogin2 color="rgb(255 255 255)" size={24} />}
       variant="transparent"
     >
-      <Text size="lg" fw={600} c={"rgb(255 255 255)"}>Log in</Text>
+      <Text visibleFrom="md" size="lg" fw={600} c={"rgb(255 255 255)"}>Log in</Text>
     </Button>
   </Group>
   )

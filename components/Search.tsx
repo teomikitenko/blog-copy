@@ -44,11 +44,12 @@ export const UserCard = ({
   admin?: boolean;
 }) => {
   return (
-    <Card bg="rgb(0 0 0)">
+    <Card w={"100%"} bg="rgb(0 0 0)">
       <Card.Section>
-        <Group  mt="60" >
+        <MobileCard user={user} />
+        <Group visibleFrom="xs" w={"100%"} mt="60">
           <Image src={logo.src} width={48} height={48} alt="avatar" />
-          <Group w="90%" justify="space-between">
+          <Group style={{ flexGrow: 1 }} justify="space-between">
             <Stack gap={5}>
               <Group>
                 <Text
@@ -58,7 +59,11 @@ export const UserCard = ({
                 >
                   {user?.name}
                 </Text>
-                {admin && <Badge size="sm" color="rgb(135 126 255)">admin</Badge>}
+                {admin && (
+                  <Badge size="sm" color="rgb(135 126 255)">
+                    admin
+                  </Badge>
+                )}
               </Group>
 
               <Text
@@ -76,6 +81,40 @@ export const UserCard = ({
             </Link>
           </Group>
         </Group>
+      </Card.Section>
+    </Card>
+  );
+};
+
+const MobileCard = ({ user }: { user: UserType | undefined }) => {
+  return (
+    <Card mt={10} bg="rgb(16 16 18)">
+      <Card.Section p={16}>
+        <Stack hiddenFrom="xs">
+          <Group>
+            <Image src={logo.src} width={48} height={48} alt="avatar" />
+            <Text
+              c="rgb(255 255 255)"
+              style={{ fontSize: "16px", lineHeight: "140%" }}
+              fw={700}
+            >
+              {user?.name}
+            </Text>
+            <Text
+              c="rgb(105 124 137)"
+              style={{ fontSize: "14px", lineHeight: "140%" }}
+              fw={500}
+            >
+              {user?.email}
+            </Text>
+          </Group>
+
+          <Link href={`/profile/${user?.id}`}>
+            <Button w={"100%"} variant="filled" bg="rgb(135 126 255)">
+              View
+            </Button>
+          </Link>
+        </Stack>
       </Card.Section>
     </Card>
   );

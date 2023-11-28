@@ -51,7 +51,7 @@ const Profile = ({
             <Tabs.Tab key={index} value={t.text}>
               <Group>
                 <Image src={t.icon} width={24} height={24} alt="icon" />
-                <Text tt="capitalize" size="lg" fw={500} c={"rgb(239 239 239)"}>
+                <Text visibleFrom="md" tt="capitalize" size="lg" fw={500} c={"rgb(239 239 239)"}>
                   {t.text}
                 </Text>
                 {t.text === "threads" && (

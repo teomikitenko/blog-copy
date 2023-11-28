@@ -34,7 +34,7 @@ const Leftbar = () => {
           <Link key={n.name} href={n.href}>
             <div key={n.name} className="link">
               <Image src={n.src} width={24} height={24} alt="icon" />
-              <Text size="xs">{n.name}</Text>
+              <Text visibleFrom="md" size="xs">{n.name}</Text>
             </div>
           </Link>
         ))}
