@@ -88,9 +88,9 @@ export const UserCard = ({
 
 const MobileCard = ({ user }: { user: UserType | undefined }) => {
   return (
-    <Card mt={10} bg="rgb(16 16 18)">
+    <Card hiddenFrom="xs" mt={10} bg="rgb(16 16 18)">
       <Card.Section p={16}>
-        <Stack hiddenFrom="xs">
+        <Stack>
           <Group>
             <Image src={logo.src} width={48} height={48} alt="avatar" />
             <Text

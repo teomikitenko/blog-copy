@@ -48,3 +48,12 @@ export  type DefaultUserSession =
       image?: string | null | undefined;
     }
   | undefined;
+
+  export type L={
+    id: number,
+    created_at: string,
+    post_id: number,
+    post_creator: string,
+    who_liked: string,
+    like: number
+  }

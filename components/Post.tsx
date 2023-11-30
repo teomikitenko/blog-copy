@@ -2,7 +2,6 @@
 import { Card, Text, Group, Stack } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
-import "@mantine/core/styles/Card.css";
 import logo from "@/public/assets/logo.svg";
 import share from "@/public/assets/share.svg";
 import repost from "@/public/assets/repost.svg";
@@ -11,9 +10,13 @@ import heartGray from "@/public/assets/heart-gray.svg";
 import heartFilled from "@/public/assets/heart-filled.svg";
 import { useEffect, useState } from "react";
 import type { CommentsType } from "@/types/types";
-import { UpdateLike, UpdateTotalLikes } from "@/configs/postsConfigs";
+import {
+  UpdateLike,
+  UpdateTotalLikes,
+  createUpdateLike,
+} from "@/configs/postsConfigs";
 import type { P, U } from "@/types/types";
-import { useSession,signIn } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 type PostProps = {
   p: P | CommentsType | null;
@@ -24,7 +27,9 @@ export const dynamic = "force-dynamic";
 
 const Post = ({ p, back = "#212529", posts }: PostProps) => {
   const { data: session, status } = useSession();
-  const router = useRouter()
+  const router = useRouter();
+  const [currentLikeId, setCurrentLikeId] = useState<number | string>();
+  const [currentLike, setCurrentLike] = useState(0);
   const [like, setLike] = useState<number>(p?.like!);
   const [pushed, setPushed] = useState(false);
   const [click, setClick] = useState(false);
@@ -33,10 +38,19 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
       ?.filter((post) => post.created_by === p?.created_by)
       .reduce((sum, current) => sum + current.like, 0)
   );
-  useEffect(()=>router.refresh(),[])
+  useEffect(() => router.refresh(), []);
   useEffect(() => {
     const changeLike = async () => {
       const result = await UpdateLike(p?.id!, like!);
+      await createUpdateLike(
+        currentLikeId!,
+        p?.id!,
+        session?.user?.name!,
+        p?.created_by!,
+        currentLike
+      ).then((res) => {
+        if (!currentLikeId) setCurrentLikeId(res![0].id);
+      });
       const posts = await fetch("http://localhost:3000/api/posts", {
         cache: "no-store",
       });
@@ -63,17 +77,17 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
   useEffect(() => {
     if (click) {
       setLike(pushed ? like + 1 : like - 1);
+      setCurrentLike(pushed ? currentLike + 1 : currentLike - 1);
       setTotal(pushed ? (total as number) + 1 : (total as number) - 1);
     }
   }, [pushed]);
   const likeHandler = () => {
-    if(status === "authenticated"){
+    if (status === "authenticated") {
       setClick(true);
       setPushed(!pushed);
-    }else{
-      signIn()
+    } else {
+      signIn();
     }
-  
   };
   return (
     <Card key={p?.id} style={{ display: "flex" }} bg={back} shadow="sm" p={35}>
@@ -93,7 +107,7 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
             <Text c={"rgb(255 255 255)"} fw={400}>
               {p?.text}
             </Text>
-            <Group mt={10} align="flex-start"> 
+            <Group mt={10} align="flex-start">
               <Group align="center" justify="center" gap={5}>
                 <Image
                   style={{ cursor: "pointer" }}
@@ -122,10 +136,7 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
                 height={27}
                 alt="share"
               />
-           
-         
             </Group>
-           
           </Stack>
         </Group>
       </Card.Section>
