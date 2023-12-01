@@ -18,7 +18,7 @@ import { createComment, searchComment } from "@/configs/postsConfigs";
 
 import type { P, CommentsType } from "@/types/types";
 type CommentsProps = {
-  post: P | /* null */ any;
+  post: P | any;
   comments: CommentsType[] | any;
 };
 
@@ -26,7 +26,6 @@ const Comments = ({ post, comments }: CommentsProps) => {
   const [value, setValue] = useState("");
   const [comment, setComment] = useState(comments);
   const [postUser, setPostUser] = useState(post);
-  console.log(comments);
   const { data: session, status } = useSession();
   const addComment = async () => {
     await createComment(session?.user?.name, value, postUser[0].id);
@@ -34,9 +33,6 @@ const Comments = ({ post, comments }: CommentsProps) => {
     setComment(updateComments);
     setValue("");
   };
-  useEffect(() => {
-    setComment(comments);
-  }, []);
   return (
     <>
       <Post key={postUser[0].id} p={postUser[0]} />

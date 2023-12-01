@@ -11,6 +11,7 @@ export type U = {
     id: number;
     created_at: string;
     created_by: string;
+    c_created_by?: string;
     text: string | number;
     like:number
   };

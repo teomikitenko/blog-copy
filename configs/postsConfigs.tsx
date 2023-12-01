@@ -1,6 +1,5 @@
-import { revalidate } from "@/app/communities/page";
 import { createClient } from "@supabase/supabase-js";
-import { revalidatePath } from "next/cache";
+
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -26,11 +25,29 @@ export const createUser = async ({ email, name, password, image }: U) => {
     .insert({ email: email, name: name, password: password, image: image });
 };
 
-export const createPost = async (creater: any, text: string | any) => {
+export const createPost = async (
+  creater: string | number,
+  text: string | number | any
+) => {
   await supabase
     .from("posts_users")
     .insert({ created_by: creater, text: text });
 };
+export const createCommunityPost = async (
+  creater: string | number,
+  text: string | number | any
+) => {
+  await supabase
+    .from("posts_users")
+    .insert([{ c_created_by: creater, text: text }])
+    .select();
+};
+export const takeCommunityPosts=async()=>{
+  let { data: posts, error } = await supabase
+  .from('c_posts')
+  .select('*')
+  return posts
+}
 export const takePost = async (id: number) => {
   const { data: post, error } = await supabase
     .from("posts_users")
@@ -183,7 +200,7 @@ export const createUpdateLike = async (
   idLike: number | string | undefined,
   idPost: string | number,
   nameWhoLiked: string,
-  postCreator:string,
+  postCreator: string,
   like: number
 ) => {
   if (idLike) {
@@ -196,31 +213,36 @@ export const createUpdateLike = async (
   } else {
     const { data, error } = await supabase
       .from("likes_post")
-      .insert([{ post_id: idPost, who_liked: nameWhoLiked, like: like,post_creator:postCreator }])
+      .insert([
+        {
+          post_id: idPost,
+          who_liked: nameWhoLiked,
+          like: like,
+          post_creator: postCreator,
+        },
+      ])
       .select();
     return data;
   }
 };
-export const takeLikePostList=async(name:string)=>{
+export const takeLikePostList = async (name: string) => {
   const { data, error } = await supabase
-  .from('likes_post')
-  .select()
-  .eq('who_liked', name)
-  .select(`*,
+    .from("likes_post")
+    .select()
+    .eq("who_liked", name).select(`*,
   posts_users(
     *
-    )'`)
-  return data
-}
-export const takeLikeName=async(name:string)=>{
+    )'`);
+  return data;
+};
+export const takeLikeName = async (name: string) => {
   const { data, error } = await supabase
-  .from('likes_post')
-  .select()
-  .eq('who_liked', name)
-   
-  return data
-}
+    .from("likes_post")
+    .select()
+    .eq("who_liked", name);
 
+  return data;
+};
 
 export const takeLike = async (name: string | number) => {
   const { data, error } = await supabase

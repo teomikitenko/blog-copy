@@ -1,5 +1,5 @@
 "use client";
-import { Card, Text, Group, Stack } from "@mantine/core";
+import { Card, Text, Group, Stack, Badge } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/logo.svg";
@@ -15,14 +15,18 @@ import {
   UpdateTotalLikes,
   createUpdateLike,
 } from "@/configs/postsConfigs";
-import type { P, U } from "@/types/types";
+import type { P } from "@/types/types";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useIntersection } from '@mantine/hooks';
 type PostProps = {
-  p: P | CommentsType | null;
+  p: P  /* | CommentsType | */| null; 
   back?: string;
   posts?: P[];
+ 
 };
+
+
 export const dynamic = "force-dynamic";
 
 const Post = ({ p, back = "#212529", posts }: PostProps) => {
@@ -101,9 +105,12 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
             alt="avatar"
           />
           <Stack>
+            <Group>
             <Text c={"rgb(255 255 255)"} fw={600}>
-              {p?.created_by}
+              {p?.created_by || p?.c_created_by }
             </Text>
+           {p?.c_created_by && <Badge>Group</Badge> } 
+            </Group>
             <Text c={"rgb(255 255 255)"} fw={400}>
               {p?.text}
             </Text>

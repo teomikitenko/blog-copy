@@ -1,12 +1,23 @@
 "use client";
-import { Textarea, Button, Stack, Text } from "@mantine/core";
-import { useState } from "react";
+import { Textarea, Button, Stack, Text, Transition } from "@mantine/core";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { create } from "@/app/api/actions";
 
 const CreateThread = () => {
   const [text, setText] = useState<string>("");
+  const [send, setSend] = useState(false);
   const { data: session, status } = useSession();
+
+  const createThread = () => {
+    setSend(true);
+  };
+  useEffect(() => {
+    if (send)
+      setTimeout(() => {
+        setSend(false), setText("");
+      }, 2000);
+  }, [send]);
 
   return (
     <>
@@ -18,7 +29,7 @@ const CreateThread = () => {
         Create Thread
       </Text>
       {status === "authenticated" && (
-        <form action={create}>
+        <form action={(e) => text.length > 0 && create(e)}>
           <Stack gap={20}>
             <Textarea
               name="text"
@@ -27,16 +38,24 @@ const CreateThread = () => {
               value={text}
               onChange={(e) => setText(e.currentTarget.value)}
               autosize
+              error = {text.length === 0&&send}
               minRows={17}
             />
+
             <Button
+              className="change_status_background"
+              onClick={() => setSend(true)}
               type="submit"
               variant="filled"
               size="md"
-              color="rgb(135 126 255)"
+              color={send ? "green" : "rgb(135 126 255)"}
               fullWidth
             >
-              Post Thread
+              {text.length === 0
+                ? "Type some text..."
+                : send
+                ? "Post Created"
+                : "Post Thread"}
             </Button>
           </Stack>
         </form>
