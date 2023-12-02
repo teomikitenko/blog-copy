@@ -4,9 +4,10 @@ import { takeCommunityPosts } from "@/configs/postsConfigs";
 import { supabase } from "@/configs/postsConfigs";
 
 export default async function HomePage() {
-          const posts = await fetch("https://blog-copy-kitt.vercel.app/api/posts", {
+           const posts = await fetch("https://blog-copy-kitt.vercel.app/api/posts", {
     cache: "no-store",
-  });         
+  }); 
+           
 
 const{data:allposts,error}=await supabase
 .from('posts_users')

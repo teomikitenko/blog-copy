@@ -21,10 +21,9 @@ type PostProps = {
   p: P /* | CommentsType | */ | null;
   back?: string;
   posts?: P[];
-  open: boolean;
 };
 export const dynamic = "force-dynamic";
-const Post = ({ p, back = "#212529", posts, open }: PostProps) => {
+const Post = ({ p, back = "#212529", posts }: PostProps) => {
   const { data: session, status } = useSession();
   const [currentLikeId, setCurrentLikeId] = useState<number | string>();
   const [currentLike, setCurrentLike] = useState(0);
@@ -92,12 +91,7 @@ const Post = ({ p, back = "#212529", posts, open }: PostProps) => {
   };
 
   return (
-      <Card
-      style={{display: "flex" }}
-      bg={back}
-      shadow="sm"
-      p={35}
-    >
+    <Card style={{ display: "flex" }} bg={back} shadow="sm" p={35}>
       <Card.Section>
         <Group gap={25} align="flex-start">
           <Image

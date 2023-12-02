@@ -53,7 +53,7 @@ const HomePosts = ({
         {(styles) => (
           <div style={styles} className="card_posts">
             {listPosts?.map((p: P) => (
-              <Post key={p.created_at} p={p} open={open} posts={allPosts} />
+              <Post key={p.created_at} p={p}  posts={allPosts} />
             ))}
           </div>
         )}
