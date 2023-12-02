@@ -10,6 +10,7 @@ export async function GET(request: Request) {
         
         .select()
         .order('id', { ascending: false })
+        .range(0,4)
             return  NextResponse.json(users) 
         
     } catch (error) {

@@ -1,137 +1,158 @@
-.content{
+.content {
     display: flex;
     width: 100%;
     min-height: 100%;
-   }
-   header{
-       display: flex;
-       justify-content: space-between;
-       position: fixed;
-       z-index: 300;
-       width: 100%;
-       padding: 0.75rem 1.5rem;
-       background-color: $main-background;
-       .link_header{
-           display: flex;
-           gap: 1rem;
-           p{
-               color: $text-color;
-               font-size: 24px;
-               line-height: 140%;
-               font-weight: 700;
-               }
-       }
-        img{
-           align-self: center;
-       }
-       .sighin_container{
-           display: flex;
-           gap: 10px;
-           p{
-               color: $text-color;
-               font-size: large;
-               font-weight:600;
-            }
-       }
-    
-   }
-   .header_logout{
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 300;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: $main-background;
+
+    .link_header {
+        display: flex;
+        gap: 1rem;
+
+        p {
+            color: $text-color;
+            font-size: 24px;
+            line-height: 140%;
+            font-weight: 700;
+        }
+    }
+
+    img {
+        align-self: center;
+    }
+
+    .sighin_container {
+        display: flex;
+        gap: 10px;
+
+        p {
+            color: $text-color;
+            font-size: large;
+            font-weight: 600;
+        }
+    }
+
+}
+
+.header_logout {
     display: none;
-   }
-   main{
-       display: flex;
-       min-height: 100%;
-       width: 100%;
-   
-         .leftbar_links_container{
-           width: 100%;
-           gap: 1.2rem;
-           padding-left: 1.5rem;
-           padding-right: 1.5rem;
-           display: flex;
-           
-            flex-direction: column; 
-            height: 100%; 
-           width: 100%;
-           .link{
-                    display: flex;
-               justify-content: flex-start;     
-       gap: 1.6rem;
-       border-radius: 0.5rem;
-       padding: 1rem;
-       img{
-           align-self: center;
-       }
-       a{
-           display: flex;
-           align-items: center;
-       }
-               p{
-                    color: $text-color;
-                    font-size: larger;
-               }
-           }
-           .signout_container{
-               display: flex;
-               
-           p{
-               color: $text-color;
-               font-size: larger;
-           }
-           }
-       }  
-   
-       .content_bar{
-           position: sticky;
-           top: 0;
-           padding: 5.5rem 2.5rem 2.5rem 2.5rem;
-           flex-grow: 1;
-       background-color: $black-background;
-       }
-   }
-   .card_posts{
-   display: flex;
-   flex-direction: column;
-   margin-top: 2.25rem;
-   gap: 2.5rem;
-   }
-   .home_page{
-   h1{
-       color: $text-color;
-       font-size: 30px;
-       line-height: 140%;
-       font-weight: 700;
-   }
-   }
-   .counter_threads{
-       font-size: 10px;
-       line-height: 140%;
-       font-weight: 500;
-       padding-top: 0.29rem;
-       padding-bottom: 0.25rem;
-       padding-left: 0.5rem;
-       padding-right: 0.5rem;
-       margin-left: 0.25rem;
-       background-color: rgb(92 92 123)
-   }
-   .mantine-TextInput-input{
-       background-color: $black-background !important;
-       border: none !important;
-   }	
-   .mantine-TextInput-wrapper{
-       border: none !important;
-   
-   }
-   .focus_button{
-      &:focus{
-       background: $main-background 
-      }
-   }
-   .card_community{
+}
+
+main {
+    display: flex;
+    min-height: 100%;
+    width: 100%;
+
+    .leftbar_links_container {
+        width: 100%;
+        gap: 1.2rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        display: flex;
+
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+
+        .link {
+            display: flex;
+            justify-content: flex-start;
+            gap: 1.6rem;
+            border-radius: 0.5rem;
+            padding: 1rem;
+
+            img {
+                align-self: center;
+            }
+
+            a {
+                display: flex;
+                align-items: center;
+            }
+
+            p {
+                color: $text-color;
+                font-size: larger;
+            }
+        }
+
+        .signout_container {
+            display: flex;
+
+            p {
+                color: $text-color;
+                font-size: larger;
+            }
+        }
+    }
+
+    .content_bar {
+        position: sticky;
+        top: 0;
+        padding: 5.5rem 2.5rem 2.5rem 2.5rem;
+        flex-grow: 1;
+        background-color: $black-background;
+    }
+}
+
+.card_posts {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.25rem;
+    gap: 2.5rem;
+    min-height: 600px;
+}
+
+.home_page {
+    h1 {
+        color: $text-color;
+        font-size: 30px;
+        line-height: 140%;
+        font-weight: 700;
+    }
+}
+
+.counter_threads {
+    font-size: 10px;
+    line-height: 140%;
+    font-weight: 500;
+    padding-top: 0.29rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-left: 0.25rem;
+    background-color: rgb(92 92 123)
+}
+
+.mantine-TextInput-input {
+    background-color: $black-background !important;
+    border: none !important;
+}
+
+.mantine-TextInput-wrapper {
+    border: none !important;
+
+}
+
+.focus_button {
+    &:focus {
+        background: $main-background
+    }
+}
+
+.card_community {
     width: 60%;
     margin-top: 2.25rem;
-   }
-   .change_status_background{
+}
+
+.change_status_background {
     transition: all 0.4s ease;
-   }
- 
+}

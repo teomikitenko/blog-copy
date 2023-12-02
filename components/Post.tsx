@@ -1,5 +1,5 @@
 "use client";
-import { Card, Text, Group, Stack, Badge } from "@mantine/core";
+import { Card, Text, Group, Stack, Badge, Transition } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/logo.svg";
@@ -8,7 +8,7 @@ import repost from "@/public/assets/repost.svg";
 import reply from "@/public/assets/reply.svg";
 import heartGray from "@/public/assets/heart-gray.svg";
 import heartFilled from "@/public/assets/heart-filled.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CommentsType } from "@/types/types";
 import {
   UpdateLike,
@@ -17,32 +17,29 @@ import {
 } from "@/configs/postsConfigs";
 import type { P } from "@/types/types";
 import { useSession, signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useIntersection } from '@mantine/hooks';
 type PostProps = {
-  p: P  /* | CommentsType | */| null; 
+  p: P /* | CommentsType | */ | null;
   back?: string;
   posts?: P[];
- 
+  open: boolean;
 };
-
-
 export const dynamic = "force-dynamic";
-
-const Post = ({ p, back = "#212529", posts }: PostProps) => {
+const Post = ({ p, back = "#212529", posts, open }: PostProps) => {
   const { data: session, status } = useSession();
-  const router = useRouter();
   const [currentLikeId, setCurrentLikeId] = useState<number | string>();
   const [currentLike, setCurrentLike] = useState(0);
   const [like, setLike] = useState<number>(p?.like!);
   const [pushed, setPushed] = useState(false);
   const [click, setClick] = useState(false);
+  const [opened, setOpened] = useState(false);
   const [total, setTotal] = useState(
     posts
       ?.filter((post) => post.created_by === p?.created_by)
       .reduce((sum, current) => sum + current.like, 0)
   );
-  useEffect(() => router.refresh(), []);
+  useEffect(() => {
+    setOpened(true);
+  }, []);
   useEffect(() => {
     const changeLike = async () => {
       const result = await UpdateLike(p?.id!, like!);
@@ -93,8 +90,14 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
       signIn();
     }
   };
+
   return (
-    <Card key={p?.id} style={{ display: "flex" }} bg={back} shadow="sm" p={35}>
+      <Card
+      style={{display: "flex" }}
+      bg={back}
+      shadow="sm"
+      p={35}
+    >
       <Card.Section>
         <Group gap={25} align="flex-start">
           <Image
@@ -106,10 +109,10 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
           />
           <Stack>
             <Group>
-            <Text c={"rgb(255 255 255)"} fw={600}>
-              {p?.created_by || p?.c_created_by }
-            </Text>
-           {p?.c_created_by && <Badge>Group</Badge> } 
+              <Text c={"rgb(255 255 255)"} fw={600}>
+                {p?.created_by || p?.c_created_by}
+              </Text>
+              {p?.c_created_by && <Badge>Group</Badge>}
             </Group>
             <Text c={"rgb(255 255 255)"} fw={400}>
               {p?.text}
