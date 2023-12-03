@@ -9,7 +9,7 @@ export async function GET(request: Request) {
         .from('posts_users')
         
         .select()
-        .order('id', { ascending: false })
+        .order('id_order', { ascending: false })
         .range(0,4)
             return  NextResponse.json(users) 
         
