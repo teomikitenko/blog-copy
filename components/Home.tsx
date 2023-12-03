@@ -1,7 +1,7 @@
 "use client";
 import Post from "./Post";
 import type { P } from "@/types/types";
-import { Box, Divider, Transition } from "@mantine/core";
+import {  Divider, Transition } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { supabase } from "@/configs/postsConfigs";
@@ -22,8 +22,8 @@ const HomePosts = ({
     threshold: 0,
   });
   useEffect(() => {
-    setOpen(true);
-    router.refresh();
+   setOpen(true);
+    router.refresh();  
   }, []);
 
   useEffect(() => {
@@ -42,23 +42,24 @@ const HomePosts = ({
       changeRange().then((res) => setListPosts(res));
     }
   }, [to]);
+  
   return (
     <div style={{ minHeight: "600px", position: "relative" }}>
       <Transition
-        mounted={open}
+         mounted ={open} 
         transition="fade"
-        duration={400}
+        duration={600}
         timingFunction="ease"
+         keepMounted  
       >
         {(styles) => (
           <div style={styles} className="card_posts">
             {listPosts?.map((p: P) => (
-              <Post key={p.created_at} p={p}  posts={allPosts} />
+              <Post key={p.created_at} p={p} posts={allPosts} />
             ))}
           </div>
         )}
       </Transition>
-
       <Divider
         my="lg"
         ref={ref}

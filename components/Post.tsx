@@ -30,25 +30,22 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
   const [like, setLike] = useState<number>(p?.like!);
   const [pushed, setPushed] = useState(false);
   const [click, setClick] = useState(false);
-  const [opened, setOpened] = useState(false);
   const [total, setTotal] = useState(
     posts
       ?.filter((post) => post.created_by === p?.created_by)
       .reduce((sum, current) => sum + current.like, 0)
   );
   useEffect(() => {
-    setOpened(true);
-  }, []);
-  useEffect(() => {
     const changeLike = async () => {
+      const creater =  p?.created_by!  || p?.c_created_by! 
       const result = await UpdateLike(p?.id!, like!);
       await createUpdateLike(
         currentLikeId!,
         p?.id!,
         session?.user?.name!,
-        p?.created_by!,
         currentLike
       ).then((res) => {
+        console.log(session)
         if (!currentLikeId) setCurrentLikeId(res![0].id);
       });
       const posts = await fetch("http://localhost:3000/api/posts", {
@@ -94,13 +91,13 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
     <Card style={{ display: "flex" }} bg={back} shadow="sm" p={35}>
       <Card.Section>
         <Group gap={25} align="flex-start">
-          <Image
+           <Image
             src={logo.src}
             style={{ objectFit: "cover" }}
             width={30}
             height={30}
             alt="avatar"
-          />
+          /> 
           <Stack>
             <Group>
               <Text c={"rgb(255 255 255)"} fw={600}>

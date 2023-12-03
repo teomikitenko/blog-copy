@@ -116,7 +116,7 @@ const ProfileHeader = ({
           <Text style={{ fontSize: "24px" }} c={"rgb(255 255 255)"} fw={700}>
             {community?.name}
           </Text>
-          {session?.user?.name === community.creator ? (
+          {session?.user?.name === community.creator ||session?.user?.name === community.name? (
             <Badge>Administrator</Badge>
           ) : community.members.find(
               (m) => m.name === session?.user?.name
@@ -169,11 +169,11 @@ const Member = ({ user, members }: { user: MembersType; members: any}) => {
                 {user?.email}
               </Text>
             </Stack>
-              <Link href={`/profile/${members.id}`}> 
+               <Link href={`/profile/${user.user_id}`}> 
             <Button variant="filled" bg="rgb(135 126 255)">
               View
             </Button>
-              </Link> 
+              </Link>  
           </Group>
         </Group>
       </Card.Section>

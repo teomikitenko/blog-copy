@@ -42,17 +42,22 @@ export const createCommunityPost = async (
     .insert([{ c_created_by: creater, text: text }])
     .select();
 };
-export const takeCommunityPosts=async()=>{
-  let { data: posts, error } = await supabase
-  .from('c_posts')
-  .select('*')
-  return posts
-}
+export const takeCommunityPosts = async () => {
+  let { data: posts, error } = await supabase.from("c_posts").select("*");
+  return posts;
+};
 export const takePost = async (id: number) => {
   const { data: post, error } = await supabase
     .from("posts_users")
     .select()
     .eq("id", id);
+  return post;
+};
+export const takeCommunityPostsByName = async (name: string | number) => {
+  const { data: post, error } = await supabase
+    .from("c_posts")
+    .select()
+    .eq("created_by", name);
   return post;
 };
 export const takeAllUserPost = async (name: string) => {
@@ -124,7 +129,7 @@ export const addNewCommunities = async ({
 export const takeAllCommunities = async () => {
   const { data: communities, error } = await supabase
     .from("communities")
-    .select();
+    .select("*");
   return communities;
 };
 
@@ -199,8 +204,9 @@ export const UpdateLike = async (
 export const createUpdateLike = async (
   idLike: number | string | undefined,
   idPost: string | number,
-  nameWhoLiked: string,
-  postCreator: string,
+  nameLiked: string,
+  /* nameCommunityLiked: string, */
+  /* postCreator: string, */
   like: number
 ) => {
   if (idLike) {
@@ -211,25 +217,36 @@ export const createUpdateLike = async (
       .select();
     return data;
   } else {
+    const user = await searchUserName(nameLiked);
+    const currentUser = () => {
+      if (user) {
+        return {
+          post_id: idPost,
+          who_liked: nameLiked,
+          like: like,
+        };
+      } else {
+        return {
+          post_id: idPost,
+          c_liked: nameLiked,
+          like: like,
+        };
+      }
+    };
     const { data, error } = await supabase
       .from("likes_post")
-      .insert([
-        {
-          post_id: idPost,
-          who_liked: nameWhoLiked,
-          like: like,
-          post_creator: postCreator,
-        },
-      ])
+      .insert([currentUser()])
       .select();
     return data;
   }
 };
 export const takeLikePostList = async (name: string) => {
+  const user = await searchUserName(name);
+  console.log(user)
   const { data, error } = await supabase
     .from("likes_post")
     .select()
-    .eq("who_liked", name).select(`*,
+    .eq(user? "who_liked":'c_liked', name).select(`*,
   posts_users(
     *
     )'`);

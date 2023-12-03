@@ -19,6 +19,7 @@ export const dynamic = "force-dynamic";
 const Activity = async() => {
  const session = await auth() 
  const favoredPost:PostList[]|any = await takeLikePostList(session?.user?.name!)
+ 
  console.log(favoredPost)
   return (
     <>

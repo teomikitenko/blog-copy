@@ -1,18 +1,10 @@
 import type { P } from "@/types/types";
 import FavoredCard from "./FavoredCard";
+import type { PList } from "@/types/types";
 
-type PostList = {
-  created_at: string;
-  id: number;
-  like: number;
-  who_liked: string;
-  post_creator: string;
-  post_id: number | string;
-  posts_users: P;
-};
 
-const FavoredCards = ({ postList }: { postList: PostList[] }) => {
-  const filterdArray: PostList[] = postList?.filter(
+const FavoredCards = ({ postList }: { postList: PList[] }) => {
+  const filterdArray: PList[] = postList?.filter(
     (p, index) =>
       index === postList.findIndex((post) => post.post_id === p.post_id)
   );

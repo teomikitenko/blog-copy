@@ -20,10 +20,11 @@ const Profile = ({
     { text: "replies", icon: members },
     { text: "tagged", icon: tag },
   ];
+
   return (
     <Stack>
       <Group mt={20}>
-        <Avatar src={user?.image ? user?.image : logo} size="xl" alt="avatar" />
+        <Avatar src={user?.image ? user?.image : logo.src} size="xl" alt="avatar" />
         <Stack gap={1}>
           <Text style={{ fontSize: "24px" }} c={"rgb(255 255 255)"} fw={700}>
             {user?.name}

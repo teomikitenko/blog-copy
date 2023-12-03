@@ -23,10 +23,12 @@ export type U = {
     bio: string;
     email: string;
     community_id: string;
-    members:MembersType[]
+   members:MembersType[] 
   };
   
   export type MembersType={
+    id:string,
+    user_id:string,
     created_at:string,
     community_id:string|number,
     name:string,
@@ -58,3 +60,12 @@ export  type DefaultUserSession =
     who_liked: string,
     like: number
   }
+export type PList = {
+  created_at: string;
+  id: number;
+  like: number;
+  who_liked: string;
+  post_creator: string;
+  post_id: number | string;
+  posts_users: P;
+};

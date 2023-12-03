@@ -105,10 +105,10 @@ main {
 
 .card_posts {
     display: flex;
+    opacity: 1;
     flex-direction: column;
     margin-top: 2.25rem;
     gap: 2.5rem;
-    min-height: 600px;
 }
 
 .home_page {
