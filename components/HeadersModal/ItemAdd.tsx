@@ -1,7 +1,8 @@
 import { Group, Modal, ThemeIcon,Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import MyForm from "./MyForm";
+
 
 
 const ItemAdd = ({ openMenu }:{openMenu: Dispatch<SetStateAction<boolean>>}) => {
@@ -10,6 +11,16 @@ const ItemAdd = ({ openMenu }:{openMenu: Dispatch<SetStateAction<boolean>>}) => 
       setOpened(false);
       openMenu(false);
     };
+    useEffect(()=>{
+     /*  if(opened){ */
+      document.querySelector('body')?.classList.add('scroll_block')
+     /*  }else{
+        document.querySelector('body')?.classList.remove('scroll_block')
+      }
+ */
+
+    },[])
+
     return (
       <>
         <Group onClick={() => setOpened(true)} mb={20} gap={40} ml={20}>
@@ -25,6 +36,7 @@ const ItemAdd = ({ openMenu }:{openMenu: Dispatch<SetStateAction<boolean>>}) => 
           opened={opened}
           onClose={closeAll}
           centered
+          
         >
           <MyForm closeAll={closeAll} />
         </Modal>

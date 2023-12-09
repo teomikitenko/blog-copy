@@ -46,7 +46,7 @@ export const takeCommunityPosts = async () => {
   let { data: posts, error } = await supabase.from("c_posts").select("*");
   return posts;
 };
-export const takePost = async (id: number) => {
+export const takePost = async (id: number|string) => {
   const { data: post, error } = await supabase
     .from("posts_users")
     .select()
@@ -287,3 +287,11 @@ export const UpdateTotalLikes = async (
     .select();
   return data![0];
 };
+export const UpdatePost= async(id:string|number,text:string|FormDataEntryValue)=>{
+  const { data, error } = await supabase
+  .from("posts_users")
+  .update({ text: text })
+  .eq("id", id)
+  /* .select(); */
+/* return data![0]; */
+}

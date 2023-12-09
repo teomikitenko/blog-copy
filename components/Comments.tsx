@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import { createComment, searchComment } from "@/configs/postsConfigs";
 
 import type { P, CommentsType } from "@/types/types";
+import { useRouter } from "next/navigation";
 type CommentsProps = {
   post: P | any;
   comments: CommentsType[] | any;
@@ -27,11 +28,13 @@ const Comments = ({ post, comments }: CommentsProps) => {
   const [comment, setComment] = useState(comments);
   const [postUser, setPostUser] = useState(post);
   const { data: session, status } = useSession();
+  const router = useRouter()
   const addComment = async () => {
     await createComment(session?.user?.name, value, postUser[0].id);
     const updateComments = await searchComment(postUser[0].id);
     setComment(updateComments);
     setValue("");
+    router.refresh()
   };
   return (
     <>

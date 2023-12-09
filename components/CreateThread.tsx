@@ -9,9 +9,6 @@ const CreateThread = () => {
   const [send, setSend] = useState(false);
   const { data: session, status } = useSession();
 
-  const createThread = () => {
-    setSend(true);
-  };
   useEffect(() => {
     if (send)
       setTimeout(() => {
@@ -38,7 +35,7 @@ const CreateThread = () => {
               value={text}
               onChange={(e) => setText(e.currentTarget.value)}
               autosize
-              error = {text.length === 0&&send}
+              error={text.length === 0 && send}
               minRows={17}
             />
 

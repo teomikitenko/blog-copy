@@ -13,8 +13,11 @@ export type U = {
     created_by: string;
     c_created_by?: string;
     text: string | number;
-    like:number
+    like:number;
+    id_order:number
   };
+
+
   export type CommunityType = {
     id: number;
     creator: string | null | undefined;

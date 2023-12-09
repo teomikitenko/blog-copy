@@ -7,7 +7,6 @@ export async function GET(request: Request) {
     try {
         const{data:users,error}=await supabase
         .from('posts_users')
-        
         .select()
         .order('id_order', { ascending: false })
         .range(0,4)

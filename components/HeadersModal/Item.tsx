@@ -40,7 +40,7 @@ const Item = ({
   const [communities, setCommunities] = useState<CommunityType[] | any>([]);
   const [user, setUser] = useState<UserType>();
   const [type, setType] = useState<string>();
-  console.log(user);
+
 
   useEffect(() => {
     const currentTypeUser = async () => {

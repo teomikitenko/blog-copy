@@ -12,7 +12,7 @@ type Children={
  const theme=createTheme({
   breakpoints: {
     xs: em('400px'),
-    sm: '48em',
+    sm: em('452px'),
     md: em('640px'),
     lg: '74em',
     xl: '90em',

@@ -1,5 +1,5 @@
 "use client";
-import { Card, Text, Group, Stack, Badge, Transition } from "@mantine/core";
+import { Card, Text, Group, Stack, Badge } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/logo.svg";
@@ -8,17 +8,17 @@ import repost from "@/public/assets/repost.svg";
 import reply from "@/public/assets/reply.svg";
 import heartGray from "@/public/assets/heart-gray.svg";
 import heartFilled from "@/public/assets/heart-filled.svg";
-import { useEffect, useRef, useState } from "react";
-import type { CommentsType } from "@/types/types";
+import { useEffect, useState } from "react";
 import {
   UpdateLike,
   UpdateTotalLikes,
   createUpdateLike,
+  supabase,
 } from "@/configs/postsConfigs";
 import type { P } from "@/types/types";
 import { useSession, signIn } from "next-auth/react";
 type PostProps = {
-  p: P /* | CommentsType | */ | null;
+  p: P | null;
   back?: string;
   posts?: P[];
 };
@@ -37,7 +37,7 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
   );
   useEffect(() => {
     const changeLike = async () => {
-      const creater =  p?.created_by!  || p?.c_created_by! 
+      const creater = p?.created_by! || p?.c_created_by!;
       const result = await UpdateLike(p?.id!, like!);
       await createUpdateLike(
         currentLikeId!,
@@ -45,13 +45,12 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
         session?.user?.name!,
         currentLike
       ).then((res) => {
-        console.log(session)
         if (!currentLikeId) setCurrentLikeId(res![0].id);
       });
-      const posts = await fetch("http://localhost:3000/api/posts", {
-        cache: "no-store",
-      });
-      return await posts.json();
+      const { data: allposts, error } = await supabase
+        .from("posts_users")
+        .select();
+      return allposts;
     };
     if (click)
       changeLike().then((res) =>
@@ -89,56 +88,66 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
 
   return (
     <Card style={{ display: "flex" }} bg={back} shadow="sm" p={35}>
-      <Card.Section>
-        <Group gap={25} align="flex-start">
-           <Image
-            src={logo.src}
-            style={{ objectFit: "cover" }}
-            width={30}
-            height={30}
-            alt="avatar"
-          /> 
-          <Stack>
-            <Group>
-              <Text c={"rgb(255 255 255)"} fw={600}>
-                {p?.created_by || p?.c_created_by}
+      <Card.Section style={{ position: "relative" }}>
+        <Group justify="space-between">
+          <Group gap={25} align="flex-start">
+            <Image
+              src={logo.src}
+              style={{ objectFit: "cover" }}
+              width={30}
+              height={30}
+              alt="avatar"
+            />
+
+            <Stack>
+              <Group>
+                <Text c={"rgb(255 255 255)"} fw={600}>
+                  {p?.created_by || p?.c_created_by}
+                </Text>
+                {p?.c_created_by && <Badge visibleFrom="sm">Group</Badge>}
+              </Group>
+              <Text c={"rgb(255 255 255)"} fw={400}>
+                {p?.text}
               </Text>
-              {p?.c_created_by && <Badge>Group</Badge>}
-            </Group>
-            <Text c={"rgb(255 255 255)"} fw={400}>
-              {p?.text}
-            </Text>
-            <Group mt={10} align="flex-start">
-              <Group align="center" justify="center" gap={5}>
+              <Group mt={10} align="flex-start">
+                <Group align="center" justify="center" gap={5}>
+                  <Image
+                    style={{ cursor: "pointer" }}
+                    onClick={likeHandler}
+                    src={pushed ? heartFilled : heartGray.src}
+                    width={27}
+                    height={27}
+                    alt="heart-gray"
+                  />
+                  <span>{like}</span>
+                </Group>
+                <Link href={`/thread/${p?.id}`}>
+                  <Image src={reply.src} width={27} height={27} alt="reply" />
+                </Link>
                 <Image
                   style={{ cursor: "pointer" }}
-                  onClick={likeHandler}
-                  src={pushed ? heartFilled : heartGray.src}
+                  src={repost.src}
                   width={27}
                   height={27}
-                  alt="heart-gray"
+                  alt="repost"
                 />
-                <span>{like}</span>
+                <Image
+                  style={{ cursor: "pointer" }}
+                  src={share.src}
+                  width={27}
+                  height={27}
+                  alt="share"
+                />
               </Group>
-              <Link href={`/thread/${p?.id}`}>
-                <Image src={reply.src} width={27} height={27} alt="reply" />
-              </Link>
-              <Image
-                style={{ cursor: "pointer" }}
-                src={repost.src}
-                width={27}
-                height={27}
-                alt="repost"
-              />
-              <Image
-                style={{ cursor: "pointer" }}
-                src={share.src}
-                width={27}
-                height={27}
-                alt="share"
-              />
-            </Group>
-          </Stack>
+            </Stack>
+          </Group>
+          {session?.user?.name === p?.created_by||p?.c_created_by && status === 'authenticated' && (
+            <Link href={`/edit/${p?.id}`}>
+            <div style={{ position: "absolute", right: "0", top: "0" }}>
+              <Text size="sm">Edit</Text>
+            </div>
+          </Link>
+          )}
         </Group>
       </Card.Section>
     </Card>

@@ -3,6 +3,9 @@
     width: 100%;
     min-height: 100%;
 }
+.scroll_block{
+    overflow: hidden;
+}
 
 header {
     display: flex;

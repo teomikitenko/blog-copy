@@ -143,7 +143,6 @@ const ProfileHeader = ({
 
 
 const Member = ({ user, members }: { user: MembersType; members: any}) => {
-  console.log(members)
   return (
     <Card bg="rgb(0 0 0)">
       <Card.Section>
