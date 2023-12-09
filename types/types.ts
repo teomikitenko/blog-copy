@@ -14,7 +14,7 @@ export type U = {
     c_created_by?: string;
     text: string | number;
     like:number;
-    id_order:number
+    id_order?:number
   };
 
 
