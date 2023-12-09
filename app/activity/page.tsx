@@ -19,9 +19,11 @@ type PostList = {
 
 const Activity = async() => {
  const session = await auth() 
-   const result = await fetch(`https://blog-copy-kitt.vercel.app/api/likelist?name=${session?.user?.name}`, {
+   /* const result = await fetch(`https://blog-copy-kitt.vercel.app/api/likelist?name=${session?.user?.name}`, {
     cache: "no-store",
-  }); 
+  }); */ 
+    const result = await fetch(`http://localhost:3000/api/likelist?name=${session?.user?.name}`,{cache:'no-store'})
+  
  const favoredPost:F = await result.json()
     return (
     <>
