@@ -3,18 +3,13 @@ import { Text } from "@mantine/core";
 import { supabase } from "@/configs/postsConfigs";
 import { Suspense } from "react";
 
-export const dynamic = 'force-dynamic'
-
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   /*   const posts = await fetch("https://blog-copy-kitt.vercel.app/api/posts"); */
-   const posts = await fetch("http://localhost:3000/api/posts"); 
-   const data = await posts.json(); 
-   /*   const { data } = await supabase
-     .from('posts_users')
-     .select()
-     .order('id_order', { ascending: false })
-     .range(0,4)  */
+  const posts = await fetch("http://localhost:3000/api/posts",{cache:'no-store'});
+  const data = await posts.json();
+
   const { data: allposts, error } = await supabase.from("posts_users").select();
   return (
     <div className="home_page">

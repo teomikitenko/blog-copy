@@ -1,6 +1,5 @@
 import React from 'react'
 import { Text } from '@mantine/core'
-import { takeLikePostList } from '@/configs/postsConfigs'
 import {auth} from '@/configs/auth'
 import FavoredCards from '@/components/FavoredCards/FavoredPosts'
 import type { P } from '@/types/types'
@@ -13,15 +12,16 @@ type PostList = {
   post_id: number | string;
   posts_users: P;
 };
-export const dynamic = "force-dynamic";
-
+ export const dynamic = "force-dynamic";
+ type F={
+  data:PostList[]
+ }
 
 const Activity = async() => {
  const session = await auth() 
- const favoredPost:PostList[]|any = await takeLikePostList(session?.user?.name!)
- 
- console.log(favoredPost)
-  return (
+ const result = await fetch(`http://localhost:3000/api/likelist?name=${session?.user?.name}`,{cache:'no-store'})
+  const favoredPost:F = await result.json()
+    return (
     <>
     <Text
     style={{ fontSize: "30px", lineHeight: "140%" }}
@@ -30,8 +30,8 @@ const Activity = async() => {
   >
     Activity
   </Text>
-  <FavoredCards postList={favoredPost as PostList[]}/>
-  </>
+        <FavoredCards  postList={favoredPost.data} />
+   </>
   )
 }
 

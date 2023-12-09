@@ -7,6 +7,7 @@ import { useInView } from "react-intersection-observer";
 import { supabase } from "@/configs/postsConfigs";
 import { useRouter } from "next/navigation";
 
+
 const HomePosts = ({
   posts,
   allPosts,
@@ -23,6 +24,7 @@ const HomePosts = ({
   });
   useEffect(() => {
     setOpen(true);
+     router.refresh() 
   }, []);
 
   useEffect(() => {
