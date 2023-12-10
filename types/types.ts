@@ -16,7 +16,10 @@ export type U = {
     like:number;
     id_order?:number
   };
-
+export type IdObj={
+  id_post: string|number,
+  id_comment: string|number
+}
 
   export type CommunityType = {
     id: number;
@@ -39,13 +42,23 @@ export type U = {
     email: string;
     table_users:U[]
   }
+  export type CommentsAnswer={
+    comm_id?:string,
+    comment_id:string,
+    created_at: string
+    id:string
+    text:string
+    user_id?:string
+  }
   export type CommentsType={
     created_at: string;
     created_by: string;
+    c_created_by?:string;
     id: number;
     id_post: number;
     text: string;
-    like:number
+    like:number;
+    user_comments:CommentsType[]
   }
 export  type DefaultUserSession =
   | {

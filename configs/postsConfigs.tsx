@@ -82,9 +82,21 @@ export const searchComment = async (id: number | string) => {
     .from("user_comments")
     .select()
     .eq("id_post", id)
-    .select();
+    .select(`*,
+    comments_answer (*)`
+    );
   return comments;
 };
+export const searchCommentData=async(id: number | string)=>{
+  let { data: comments, error } = await supabase
+  .from("user_comments")
+  .select()
+  .eq("id", id)
+  .select(`*,
+  user_comments (*)`
+  );
+return comments;
+}
 
 export const takeAllUsers = async () => {
   const { data: users, error } = await supabase.from("table_users").select();
