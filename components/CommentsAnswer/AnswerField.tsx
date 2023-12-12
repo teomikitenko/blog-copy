@@ -16,7 +16,7 @@ const AnswerField = ({c}:{c:CommentsType}) => {
         <Group w={"100%"} my={25}>
           <Image src={logo} width={23} height={23} alt="avatar" />
           <TextInput
-            /* value={value} */
+             /* value='hello' */
             name="answer"
            /*  onChange={(e) => setValue(e.currentTarget.value)} */
             style={{ flexGrow: 1 }}
