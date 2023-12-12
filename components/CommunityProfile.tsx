@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 import Image from "next/image";
 import { CommunityType,MembersType } from "@/types/types";
-import { UserCard } from "./Search";
+import UserCard from "./UserCards/UserCard";
 import reply from "@/public/assets/reply.svg";
 import membersImg from "@/public/assets/members.svg";
 import request from "@/public/assets/request.svg";
