@@ -67,6 +67,19 @@ export const takeAllUserPost = async (name: string) => {
     .eq("created_by", name);
   return posts;
 };
+export const takeAndDefinePosts = async (name: string) => {
+  const user = await searchUserName(name)
+  const { data: posts, error } = await supabase
+  .from("posts_users")
+  .select()
+  .eq(user?"created_by":'c_created_by', name);
+return posts;
+
+};
+
+
+
+
 export const takeAllPosts = async () => {
   const { data: posts, error } = await supabase.from("posts_users").select();
   return posts;

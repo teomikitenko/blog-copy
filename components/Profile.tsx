@@ -20,7 +20,6 @@ const Profile = ({
     { text: "replies", icon: members },
     { text: "tagged", icon: tag },
   ];
-
   return (
     <Stack>
       <Group mt={20}>

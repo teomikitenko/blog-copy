@@ -1,7 +1,6 @@
 import React from "react";
 import Search from "@/components/Search";
-import { takeAllUsers, takeAllCommunities } from "@/configs/postsConfigs";
-import type { CommunityType, U } from "@/types/types";
+import { takeAllUsers} from "@/configs/postsConfigs";
 
 export const dynamic = "force-dynamic";
 
