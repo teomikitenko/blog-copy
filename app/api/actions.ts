@@ -61,8 +61,7 @@ export  async function create(formData: FormData){
      const user = await searchUserName(session?.user?.name!)
      const community = await searchCommunityByName(session?.user?.name!)
       if(user) {
-          console.log('asddfa')
-           const { data, error } = await supabase
+      await supabase
           .from('user_comments')
           .insert([
             {  
@@ -72,7 +71,6 @@ export  async function create(formData: FormData){
                user_id:user.id,  
                  },])
           .select()  
-          console.log(user.name)
      }if(community?.length!>0){
          await supabase
           .from('user_comments')
@@ -83,8 +81,6 @@ export  async function create(formData: FormData){
                comm_id:community![0].id,  
                  }, ])
           .select() }
-            
-          
           revalidatePath(`/comment/${answerId}`)   
         
     }

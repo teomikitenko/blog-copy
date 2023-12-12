@@ -8,7 +8,9 @@ import CommentPageForm from "@/components/CommentPageForm";
 
 const CommentsPage = async ({ params }: { params: { id: string } }) => {
   const data: CommentsType[] | null = await searchCommentData(params.id);
-  const answer = data![0].user_comments;
+  const answer = data![0].user_comments 
+ /* const sortedAnswer =  */
+ console.log(answer)
   return (
     <>
       <Text
@@ -27,11 +29,11 @@ const CommentsPage = async ({ params }: { params: { id: string } }) => {
       <CommentPageForm comment_id={params.id} />
       <Divider my="sm" />
       <Stack>
-        {answer.map((c: CommentsType) => (
+         {answer.map((c: CommentsType) => (
           <Link key={c.id} href={`/comment/${c.id}`}>
             <Comment key={c.id} c={c} />
           </Link>
-        ))}
+        ))} 
       </Stack>
     </>
   );

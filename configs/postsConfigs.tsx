@@ -106,8 +106,9 @@ export const searchCommentData=async(id: number | string)=>{
   .select()
   .eq("id", id)
   .select(`*,
-  user_comments (*)`
-  );
+  user_comments (*)`)
+  .order('order', { foreignTable: "user_comments",ascending: false })
+
 return comments;
 }
 
