@@ -1,15 +1,21 @@
-import type { CommentsAnswer } from "@/types/types"
-import { Card, Group, Stack } from "@mantine/core"
-import Image from "next/image"
-import { Text } from "@mantine/core"
+import type { CommentsAnswer } from "@/types/types";
+import { Card, Group, Stack } from "@mantine/core";
+import Image from "next/image";
+import { Text } from "@mantine/core";
 import reply from "@/public/assets/reply.svg";
 import heartGray from "@/public/assets/heart-gray.svg";
 import heartFilled from "@/public/assets/heart-filled.svg";
 import logo from "@/public/assets/logo.svg";
 
-const CommentsAnswer=({a}:{a:CommentsAnswer})=>{
-    return(
-      <Card style={{ display: "flex" }} bg="rgb(0 0 0)" shadow="sm" mt={10} p={25}>
+const CommentsAnswer = ({ a }: { a: CommentsAnswer }) => {
+  return (
+    <Card
+      style={{ display: "flex" }}
+      bg="rgb(0 0 0)"
+      shadow="sm"
+      mt={10}
+      p={25}
+    >
       <Card.Section style={{ position: "relative" }}>
         <Group justify="space-between">
           <Group gap={25} align="flex-start">
@@ -20,15 +26,9 @@ const CommentsAnswer=({a}:{a:CommentsAnswer})=>{
               height={30}
               alt="avatar"
             />
-  
+
             <Stack>
-           {/*    <Group>
-                <Text c={"rgb(255 255 255)"} fw={600}>
-                  {c?.created_by || c?.c_created_by}
-                </Text>
-                {c?.c_created_by && <Badge visibleFrom="sm">Group</Badge>}
-              </Group> */}
-              <Text c={"rgb(255 255 255)"}fs='' fw={300}>
+              <Text c={"rgb(255 255 255)"} fs="" fw={300}>
                 {a?.text}
               </Text>
               <Group mt={10} align="flex-start">
@@ -36,28 +36,20 @@ const CommentsAnswer=({a}:{a:CommentsAnswer})=>{
                   <Image
                     style={{ cursor: "pointer" }}
                     /*  onClick={likeHandler} */
-                    src={/* pushedLike ?  *//* heartFilled : */ heartGray.src} 
+                    src={/* pushedLike ?  */ /* heartFilled : */ heartGray.src}
                     width={23}
                     height={23}
                     alt="heart-gray"
                   />
-                 {/*  <span>{like}</span> */}
+                  {/*  <span>{like}</span> */}
                 </Group>
-  
-                <Image
-                  src={reply.src}
-                  width={23}
-                  height={23}
-                  /* onClick={() => setPushedComment(!pushedComment)} */
-                  alt="reply"
-                />
+
+                <Image src={reply.src} width={23} height={23} alt="reply" />
               </Group>
             </Stack>
           </Group>
         </Group>
       </Card.Section>
-     {/*  {c.comments_answer.map(a=><CommentsAnswer/>)}
-      {pushedComment && <Answer c={c} />} */}
     </Card>
-    )
-  }
+  );
+};

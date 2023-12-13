@@ -9,6 +9,7 @@ import {
   TextInput,
   Button,
   Badge,
+  Box,
 } from "@mantine/core";
 import Image from "next/image";
 import "@mantine/core/styles/Card.css";
@@ -45,24 +46,32 @@ const Comments = ({ post, comments }: CommentsProps) => {
 
       <Divider my="sm" />
       <Group w={"100%"} my={25}>
+        <Box visibleFrom="sm">
         <Image src={logo} width={48} height={48} alt="avatar" />
+        </Box>
+        
         <TextInput
           value={value}
           onChange={(e) => setValue(e.currentTarget.value)}
-          style={{ flexGrow: 1 }}
+          style={{ flexGrow: 1,minWidth:'200px'}}
           placeholder="Comment..."
         />
-        <Button onClick={addComment} variant="filled" radius={"lg"}>
+        <Button visibleFrom="xs"  onClick={addComment} variant="filled" radius={"lg"}>
           <Text py={"md"} px={"sm"} size="md">
             Reply
           </Text>
         </Button>
+         <Button hiddenFrom="xs" fullWidth onClick={addComment} variant="filled" radius={"lg"}>
+          <Text py={"md"} px={"sm"} size="md">
+            Reply
+          </Text>
+        </Button> 
       </Group>
       <Divider my="sm" />
       <Stack>
         {comment.map((c:CommentsType)=>(
-          <Link href={`/comment/${c.id}`}>
-          <Comment key={c.id} c={c} />
+          <Link key={c.id} href={`/comment/${c.id}`}>
+          <Comment  c={c} />
           </Link>
           
         ))}

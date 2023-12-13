@@ -33,50 +33,49 @@ const CommunityCard = ({ data }: { data: CommunityType }) => {
     setUrl(publicUrl?.data?.publicUrl);
   }, []);
   return (
-    <Card
-    className="card_community"
-      radius="lg"
-      padding="lg"
-    >
-      <Group>
-        <Image
-          style={{ borderRadius: "100px" }}
-          src={url ? url : logo}
-          width={48}
-          height={48}
-          alt="logo_community"
-        />
-        <Stack gap={0}>
-          <Text
-            c="rgb(255 255 255)"
-            style={{ fontSize: "16px", lineHeight: "140%" }}
-            fw={700}
-          >
-            {data.name}
-          </Text>
-          <Text
-            c="rgb(105 124 137)"
-            style={{ fontSize: "14px", lineHeight: "140%" }}
-            fw={500}
-          >
-            {data.email}
-          </Text>
-        </Stack>
-      </Group>
+    <>
+      <Card className="card_community" radius="lg" padding="lg">
+        <Group>
+          <Image
+            style={{ borderRadius: "100px" }}
+            src={url ? url : logo}
+            width={48}
+            height={48}
+            alt="logo_community"
+          />
+          <Stack gap={0}>
+            <Text
+              c="rgb(255 255 255)"
+              style={{ fontSize: "16px", lineHeight: "140%" }}
+              fw={700}
+            >
+              {data.name}
+            </Text>
+            <Text
+              c="rgb(105 124 137)"
+              style={{ fontSize: "14px", lineHeight: "140%" }}
+              fw={500}
+            >
+              {data.email}
+            </Text>
+          </Stack>
+        </Group>
 
-      <Text
-        mt={20}
-        c="rgb(105 124 137)"
-        style={{ fontSize: "13px", lineHeight: "140%" }}
-        fw={500}
-      >
-        {data.bio}
-      </Text>
-      <Link href={`/communities/${data.id}`}>
-        <Button mt={20} color="rgb(135 126 255)">
-          View
-        </Button>
-      </Link>
-    </Card>
+        <Text
+          mt={20}
+          c="rgb(105 124 137)"
+          style={{ fontSize: "13px", lineHeight: "140%" }}
+          fw={500}
+        >
+          {data.bio}
+        </Text>
+        <Link href={`/communities/${data.id}`}>
+          <Button fullWidth mt={20} color="rgb(135 126 255)">
+            View
+          </Button>
+        </Link>
+      </Card>
+    </>
   );
 };
+

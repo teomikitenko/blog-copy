@@ -11,7 +11,6 @@ type Children={
 }
  const theme=createTheme({
   breakpoints: {
-    small:em('390px'),
     xs: em('400px'),
     sm: em('468px'),
     md: em('640px'),

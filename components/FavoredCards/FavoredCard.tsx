@@ -1,6 +1,6 @@
 "use client";
 import { P } from "@/types/types";
-import { Card, Text, Group, Stack, Badge } from "@mantine/core";
+import { Card, Text, Group, Stack, Badge, Box } from "@mantine/core";
 import Image from "next/image";
 import logo from "@/public/assets/logo.svg";
 import heartGray from "@/public/assets/heart-gray.svg";
@@ -38,6 +38,7 @@ const FavoredCard = ({
       >
         <Card.Section>
           <Group gap={25} align="flex-start">
+            <Box visibleFrom="xs">
             <Image
               src={logo.src}
               style={{ objectFit: "cover" }}
@@ -45,6 +46,7 @@ const FavoredCard = ({
               height={30}
               alt="avatar"
             />
+            </Box>
             <Stack>
               <Text c={"rgb(255 255 255)"} fw={600}>
                 {p?.posts_users.created_by}

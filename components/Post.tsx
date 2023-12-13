@@ -92,13 +92,15 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
       <Card.Section style={{ position: "relative" }}>
         <Group justify="space-between">
           <Group gap={25} align="flex-start">
-            <Image
-              src={logo.src}
-              style={{ objectFit: "cover" }}
-              width={30}
-              height={30}
-              alt="avatar"
-            />
+            <Box visibleFrom="xs">
+              <Image
+                src={logo.src}
+                style={{ objectFit: "cover" }}
+                width={30}
+                height={30}
+                alt="avatar"
+              />
+            </Box>
 
             <Stack>
               <Group>
@@ -125,20 +127,6 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
                 <Link href={`/thread/${p?.id}`}>
                   <Image src={reply.src} width={27} height={27} alt="reply" />
                 </Link>
-                <Image
-                  style={{ cursor: "pointer" }}
-                  src={repost.src}
-                  width={27}
-                  height={27}
-                  alt="repost"
-                />
-                <Image
-                  style={{ cursor: "pointer" }}
-                  src={share.src}
-                  width={27}
-                  height={27}
-                  alt="share"
-                />
               </Group>
             </Stack>
           </Group>
@@ -154,7 +142,12 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
                 <ThemeIcon
                   hiddenFrom="lg"
                   variant="transparent"
-                  style={{ position: "absolute", right: "0", top: "0" }}
+                  style={{
+                    position: "absolute",
+                    right: "0",
+                    top: "0",
+                    marginRight: "7px",
+                  }}
                 >
                   <IconEdit color="white" />
                 </ThemeIcon>

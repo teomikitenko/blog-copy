@@ -9,7 +9,6 @@ import CommentPageForm from "@/components/CommentPageForm";
 const CommentsPage = async ({ params }: { params: { id: string } }) => {
   const data: CommentsType[] | null = await searchCommentData(params.id);
   const answer = data![0].user_comments 
- /* const sortedAnswer =  */
  console.log(answer)
   return (
     <>
