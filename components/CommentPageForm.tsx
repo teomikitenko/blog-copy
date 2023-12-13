@@ -8,7 +8,11 @@ import { useState } from "react";
 const CommentPageForm = ({ comment_id }: { comment_id: string }) => {
   const [value, setValue] = useState("");
   return (
-    <form action={(e) => comment(e, comment_id)}>
+    <form action={async(e) => {
+      await comment(e, comment_id)
+    setValue('')
+    }
+    }>
       <Group w={"100%"} my={25}>
         <Image src={logo} width={48} height={48} alt="avatar" />
         <TextInput

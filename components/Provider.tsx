@@ -11,10 +11,11 @@ type Children={
 }
  const theme=createTheme({
   breakpoints: {
+    small:em('390px'),
     xs: em('400px'),
-    sm: em('452px'),
+    sm: em('468px'),
     md: em('640px'),
-    lg: '74em',
+    lg: em('770px'),
     xl: '90em',
   },
   components:{

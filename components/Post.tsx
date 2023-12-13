@@ -1,5 +1,5 @@
 "use client";
-import { Card, Text, Group, Stack, Badge } from "@mantine/core";
+import { Card, Text, Group, Stack, Badge, Box, ThemeIcon } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/logo.svg";
@@ -17,6 +17,7 @@ import {
 } from "@/configs/postsConfigs";
 import type { P } from "@/types/types";
 import { useSession, signIn } from "next-auth/react";
+import { IconEdit } from "@tabler/icons-react";
 type PostProps = {
   p: P | null;
   back?: string;
@@ -141,13 +142,24 @@ const Post = ({ p, back = "#212529", posts }: PostProps) => {
               </Group>
             </Stack>
           </Group>
-          {session?.user?.name === p?.created_by||p?.c_created_by && status === 'authenticated' && (
-            <Link href={`/edit/${p?.id}`}>
-            <div style={{ position: "absolute", right: "0", top: "0" }}>
-              <Text size="sm">Edit</Text>
-            </div>
-          </Link>
-          )}
+          {session?.user?.name === p?.created_by ||
+            (p?.c_created_by && status === "authenticated" && (
+              <Link href={`/edit/${p?.id}`}>
+                <Box
+                  visibleFrom="lg"
+                  style={{ position: "absolute", right: "0", top: "0" }}
+                >
+                  <Text size="sm">Edit</Text>
+                </Box>
+                <ThemeIcon
+                  hiddenFrom="lg"
+                  variant="transparent"
+                  style={{ position: "absolute", right: "0", top: "0" }}
+                >
+                  <IconEdit color="white" />
+                </ThemeIcon>
+              </Link>
+            ))}
         </Group>
       </Card.Section>
     </Card>
