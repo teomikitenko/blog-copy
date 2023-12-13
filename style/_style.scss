@@ -6,7 +6,12 @@
 .scroll_block{
     overflow: hidden;
 }
-
+.display_none{
+    display: none;
+}
+.display_block{
+    display: none;
+}
 header {
     display: flex;
     justify-content: space-between;
